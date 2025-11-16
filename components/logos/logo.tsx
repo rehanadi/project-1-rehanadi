@@ -1,11 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { useMedia } from 'react-use';
 
-const Logo = () => {
-  const isLargeIsh = useMedia('(min-width: 768px)', false);
+interface LogoProps {
+  size?: 'small' | 'large';
+}
 
+const Logo = ({ size = 'large' }: LogoProps) => {
   const imageConfigs = {
     large: {
       src: '/icons/logo.svg',
@@ -19,7 +20,7 @@ const Logo = () => {
     },
   };
 
-  const imageConfig = isLargeIsh ? imageConfigs.large : imageConfigs.small;
+  const imageConfig = imageConfigs[size];
 
   return (
     <Image

@@ -1,15 +1,17 @@
 import { ChevronDown, Search } from 'lucide-react';
-import Logo from '../logos/logo';
-import { Input } from '../ui/input';
+import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import ResponsiveLogo from '@/components/logos/responsive-logo';
 
 const Header = () => {
   return (
     <header className='shadow-light sticky inset-x-0 top-0 z-50 h-16 w-full gap-4 bg-white md:h-20'>
       <div className='custom-container flex-between h-full'>
-        <Logo />
+        <Link href='/'>
+          <ResponsiveLogo />
+        </Link>
 
         <div className='hidden h-11 w-[500px] items-center gap-1 rounded-full border border-neutral-300 px-4 md:flex md:gap-1.5'>
           <Search className='size-5 shrink-0 text-neutral-600' />
