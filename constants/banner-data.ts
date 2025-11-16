@@ -1,23 +1,23 @@
 export interface BannerData {
-  href: string;
-  src: string;
-  alt: string;
+  link: string;
+  image: string;
+  title: string;
 }
 
 export const bannerData: BannerData[] = [
   {
-    href: '/',
-    src: '/images/banner.png',
-    alt: 'Banner 1',
+    link: '/',
+    image: '/images/banner.png',
+    title: 'Banner 1',
   },
   {
-    href: '/',
-    src: '/images/banner.png',
-    alt: 'Banner 2',
+    link: '/',
+    image: '/images/banner.png',
+    title: 'Banner 2',
   },
   {
-    href: '/',
-    src: '/images/banner.png',
-    alt: 'Banner 3',
+    link: '/',
+    image: '/images/banner.png',
+    title: 'Banner 3',
   },
 ];

@@ -1,4 +1,4 @@
-import { bannerData, BannerData } from '@/constants/banner-data';
+import { bannerData, type BannerData } from '@/constants/banner-data';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -15,12 +15,7 @@ const Banners = () => {
         <CarouselContent>
           {bannerData.map((banner, index) => (
             <CarouselItem key={index} className='md:basis-full'>
-              <Banner
-                key={index}
-                href={banner.href}
-                src={banner.src}
-                alt={banner.alt}
-              />
+              <Banner key={index} {...banner} />
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -32,11 +27,11 @@ const Banners = () => {
 
 export default Banners;
 
-const Banner = ({ href, src, alt }: BannerData) => {
+const Banner = ({ link, image, title }: BannerData) => {
   return (
     <div className='relative aspect-1200/441 w-full overflow-hidden rounded-4xl'>
-      <Link href={href} className='relative block h-full w-full'>
-        <Image src={src} alt={alt} fill />
+      <Link href={link} className='relative block h-full w-full'>
+        <Image src={image} alt={title} fill />
       </Link>
     </div>
   );
