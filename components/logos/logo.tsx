@@ -1,33 +1,17 @@
 'use client';
 
+import { type LogoConfig, logoConfigs } from '@/configs/logo.config';
 import Image from 'next/image';
 
-interface LogoProps {
-  size?: 'small' | 'large';
-}
-
-const Logo = ({ size = 'large' }: LogoProps) => {
-  const imageConfigs = {
-    large: {
-      src: '/icons/logo.svg',
-      width: 155,
-      height: 42,
-    },
-    small: {
-      src: '/icons/logo-small.svg',
-      width: 40,
-      height: 40,
-    },
-  };
-
-  const imageConfig = imageConfigs[size];
+const Logo = ({ size = 'large' }: LogoConfig) => {
+  const logoConfig = logoConfigs[size];
 
   return (
     <Image
-      src={imageConfig.src}
+      src={logoConfig.image}
       alt='Logo'
-      width={imageConfig.width}
-      height={imageConfig.height}
+      width={logoConfig.width}
+      height={logoConfig.height}
     />
   );
 };
