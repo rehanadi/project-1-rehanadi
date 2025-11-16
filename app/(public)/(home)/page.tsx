@@ -1,5 +1,6 @@
 import Banners from './partials/banners';
 import Categories from './partials/categories';
+import PopularAuthors from './partials/popular-authors';
 import Recommendations from './partials/recommendations';
 
 const Home = () => {
@@ -8,6 +9,7 @@ const Home = () => {
       <Banners />
       <Categories />
       <Recommendations />
+      <PopularAuthors />
     </div>
   );
 };

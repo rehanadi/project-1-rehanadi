@@ -1,6 +1,6 @@
 import { Section } from '@/components/layouts/section';
 import { Button } from '@/components/ui/button';
-import { bookData } from '@/constants/book-data';
+import { bookData } from '@/features/books/constants/book-data';
 import BookCard from '@/features/books/components/book-card';
 
 const Recommendations = () => {
