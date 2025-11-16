@@ -1,5 +1,5 @@
 import React from 'react';
-import HeaderPublic from '@/components/headers/header-public';
+import Header from '@/components/headers/header';
 
 interface PublicLayoutProps {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ interface PublicLayoutProps {
 const PublicLayout = ({ children }: PublicLayoutProps) => {
   return (
     <>
-      <HeaderPublic />
+      <Header />
       <main>{children}</main>
     </>
   );
