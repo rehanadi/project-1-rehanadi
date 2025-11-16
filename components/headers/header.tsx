@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const Header = () => {
   return (
-    <header className='shadow-light sticky inset-x-0 top-0 z-50 h-16 w-full gap-4 md:h-20'>
+    <header className='shadow-light sticky inset-x-0 top-0 z-50 h-16 w-full gap-4 bg-white md:h-20'>
       <div className='custom-container flex-between h-full'>
         <Logo />
 
