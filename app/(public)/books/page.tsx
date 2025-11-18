@@ -13,7 +13,7 @@ interface FilterProps {
   value: string;
 }
 
-const CategoryPage = () => {
+const BooksPage = () => {
   return (
     <div className='custom-container w-full py-4 md:pt-12 md:pb-[96.75px]'>
       <Section title='Book List' className='gap-4 md:gap-8'>
@@ -66,7 +66,7 @@ const CategoryPage = () => {
   );
 };
 
-export default CategoryPage;
+export default BooksPage;
 
 const CategoryFilter = ({ title, value }: FilterProps) => {
   return (
