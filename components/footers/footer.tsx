@@ -7,24 +7,26 @@ import {
 
 const Footer = () => {
   return (
-    <footer className='custom-container flex flex-col items-center gap-4 border-t border-neutral-300 py-10 md:gap-10 md:py-20'>
-      <div className='flex flex-col items-center gap-4 md:gap-[22px]'>
-        <Link href='/'>
-          <Logo />
-        </Link>
+    <footer className='border-t border-neutral-300'>
+      <div className='custom-container flex flex-col items-center gap-4 py-10 md:gap-10 md:py-20'>
+        <div className='flex flex-col items-center gap-4 md:gap-[22px]'>
+          <Link href='/'>
+            <Logo />
+          </Link>
 
-        <p className='text-sm-semibold md:text-md-semibold'>
-          Discover inspiring stories & timeless knowledge, ready to borrow
-          anytime. Explore online or visit our nearest library branch.
-        </p>
-      </div>
+          <p className='text-sm-semibold md:text-md-semibold'>
+            Discover inspiring stories & timeless knowledge, ready to borrow
+            anytime. Explore online or visit our nearest library branch.
+          </p>
+        </div>
 
-      <div className='flex flex-col gap-5'>
-        <h3 className='text-md-bold'>Follow on Social Media</h3>
-        <div className='flex-center gap-3'>
-          {socialMediaData.map((socialMedia, index) => (
-            <SocialMediaIcon key={index} {...socialMedia} />
-          ))}
+        <div className='flex flex-col gap-5'>
+          <h3 className='text-md-bold'>Follow on Social Media</h3>
+          <div className='flex-center gap-3'>
+            {socialMediaData.map((socialMedia, index) => (
+              <SocialMediaIcon key={index} {...socialMedia} />
+            ))}
+          </div>
         </div>
       </div>
     </footer>

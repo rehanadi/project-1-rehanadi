@@ -10,7 +10,7 @@ import {
 
 const Banners = () => {
   return (
-    <div className='custom-container flex w-full flex-col'>
+    <div className='flex w-full flex-col'>
       <Carousel>
         <CarouselContent>
           {bannerData.map((banner, index) => (

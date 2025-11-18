@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Categories = () => {
   return (
-    <div className='custom-container flex w-full flex-wrap items-start justify-start gap-3 md:gap-4'>
+    <div className='flex w-full flex-wrap items-start justify-start gap-3 md:gap-4'>
       {categoryData.map((category, index) => (
         <CategoryCard key={index} {...category} />
       ))}

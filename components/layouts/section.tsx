@@ -16,14 +16,15 @@ export const Section: React.FC<SectionProps> = ({
 }) => {
   return (
     <div
-      className={cn(
-        'custom-container flex w-full flex-col gap-5 md:gap-10',
-        className
-      )}
+      className={cn('flex w-full flex-col gap-5 md:gap-10', className)}
       id={id}
     >
       {/* heading */}
-      {title && <h2 className='display-xs-bold md:display-lg-bold'>{title}</h2>}
+      {title && (
+        <h2 className='text-display-xs md:text-display-lg font-bold'>
+          {title}
+        </h2>
+      )}
 
       {/* content */}
       <div>{children}</div>

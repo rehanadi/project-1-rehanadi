@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Book } from '../types/book.type';
+import BookRating from './book-rating';
 
 const BookCard = ({ title, author, rating, image, link }: Book) => {
   return (
@@ -24,13 +25,7 @@ const BookCard = ({ title, author, rating, image, link }: Book) => {
           </h3>
         </Link>
         <p className='text-sm-medium text-neutral-700'>{author}</p>
-        <div className='flex-start gap-0.5'>
-          <Icon
-            icon='material-symbols:star-rounded'
-            className='size-6 text-yellow-500'
-          />
-          <span className='text-sm-semibold text-neutral-900'>{rating}</span>
-        </div>
+        <BookRating rating={rating} />
       </div>
     </div>
   );
