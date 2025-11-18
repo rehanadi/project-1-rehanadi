@@ -1,38 +1,38 @@
 export interface CategoryData {
   title: string;
   image: string;
-  link: string;
+  slug: string;
 }
 
 export const categoryData: CategoryData[] = [
   {
     title: 'Fiction',
     image: '/icons/categories/fiction.svg',
-    link: '/categories/fiction',
+    slug: 'fiction',
   },
   {
     title: 'Non-Fiction',
     image: '/icons/categories/non-fiction.svg',
-    link: '/categories/non-fiction',
+    slug: 'non-fiction',
   },
   {
     title: 'Self-Improvement',
     image: '/icons/categories/self-improvement.svg',
-    link: '/categories/self-improvement',
+    slug: 'self-improvement',
   },
   {
     title: 'Finance',
     image: '/icons/categories/finance.svg',
-    link: '/categories/finance',
+    slug: 'finance',
   },
   {
     title: 'Science',
     image: '/icons/categories/science.svg',
-    link: '/categories/science',
+    slug: 'science',
   },
   {
     title: 'Education',
     image: '/icons/categories/education.svg',
-    link: '/categories/education',
+    slug: 'education',
   },
 ];

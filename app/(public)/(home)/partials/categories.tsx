@@ -14,9 +14,9 @@ const Categories = () => {
 
 export default Categories;
 
-const CategoryCard = ({ title, image, link }: CategoryData) => {
+const CategoryCard = ({ title, image, slug }: CategoryData) => {
   return (
-    <Link href={link} className='block flex-1 basis-28'>
+    <Link href={`/categories/${slug}`} className='block flex-1 basis-28'>
       <div className='group shadow-light flex flex-col gap-3 rounded-2xl bg-white p-2 md:p-3'>
         <div className='bg-info-200 flex-center rounded-[10.5px] p-[5.6px] md:rounded-xl md:p-[6.4px]'>
           <div className='relative size-[44.8px] transition group-hover:scale-110 md:size-[51.2px]'>

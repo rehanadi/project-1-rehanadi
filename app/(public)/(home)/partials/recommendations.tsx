@@ -7,7 +7,7 @@ const Recommendations = () => {
   return (
     <Section title='Recommendation'>
       <div className='flex flex-col gap-5 md:gap-10'>
-        <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'>
+        <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 md:gap-5 lg:grid-cols-5'>
           {bookData.map((book, index) => (
             <BookCard key={index} {...book} />
           ))}
