@@ -1,4 +1,7 @@
-import { bannerData, type BannerData } from '@/constants/banner-data';
+import {
+  bannerData,
+  type BannerData,
+} from '@/features/shared/constants/banner-data';
 import Image from 'next/image';
 import Link from 'next/link';
 import {

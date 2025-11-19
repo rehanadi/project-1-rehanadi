@@ -1,10 +1,10 @@
-import HorizontalSeparator from '@/components/separators/horizontal-separator';
-import VerticalSeparator from '@/components/separators/vertical-separator';
+import Separator from '@/features/shared/components/separator';
 import BookRating from '@/features/books/components/book-rating';
 import Image from 'next/image';
 import Breadcrumbs from './breadcrumbs';
 import { Button } from '@/components/ui/button';
 import { Share2 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 const Details = () => {
   return (
@@ -22,9 +22,7 @@ const Details = () => {
         <div className='flex flex-1 flex-col gap-4 md:gap-5'>
           <div className='flex flex-col gap-3 md:gap-5.5'>
             <div className='flex flex-col items-start gap-0.5 md:gap-1'>
-              <div className='text-sm-bold rounded-sm border border-neutral-300 px-2'>
-                Business & Economics
-              </div>
+              <Badge variant='outline'>Business & Economics</Badge>
               <h1 className='text-display-xs md:text-display-sm font-bold'>
                 The Psychology of Money
               </h1>
@@ -36,14 +34,14 @@ const Details = () => {
 
             <div className='flex flex-wrap gap-5'>
               <InfoCard title='Page' description='320' />
-              <VerticalSeparator />
+              <Separator isVertical />
               <InfoCard title='Rating' description='212' />
-              <VerticalSeparator />
+              <Separator isVertical />
               <InfoCard title='Reviews' description='179' />
             </div>
           </div>
 
-          <HorizontalSeparator className='md:max-w-[559px]' />
+          <Separator className='md:max-w-[559px]' />
 
           <div className='flex flex-col gap-1'>
             <h2 className='text-xl-bold'>Description</h2>

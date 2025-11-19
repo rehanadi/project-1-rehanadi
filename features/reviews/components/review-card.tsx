@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import Stars from '@/components/ui/stars';
-import { Review } from '../types/review.type';
+import Ratings from '@/features/shared/components/ratings';
+import { Review } from '../types/review.types';
 import { cn } from '@/lib/utils';
 
 const ReviewCard = ({
@@ -31,7 +31,7 @@ const ReviewCard = ({
       </div>
 
       <div className='flex flex-col gap-2'>
-        <Stars rating={rating} />
+        <Ratings rating={rating} />
         <p className='text-sm-semibold md:text-md-semibold'>{comment}</p>
       </div>
     </div>

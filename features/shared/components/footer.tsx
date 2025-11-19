@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import Logo from '../logos/logo';
+import Logo from './logo';
 import {
   socialMediaData,
   type SocialMediaData,
-} from '@/constants/social-media-data';
+} from '@/features/shared/constants/social-media-data';
 
 const Footer = () => {
   return (

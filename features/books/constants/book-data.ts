@@ -1,4 +1,4 @@
-import type { Book } from '@/features/books/types/book.type';
+import type { Book } from '@/features/books/types/book.types';
 
 export const bookData: Book[] = [
   {

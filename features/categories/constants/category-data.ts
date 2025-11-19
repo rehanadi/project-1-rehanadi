@@ -1,10 +1,6 @@
-export interface CategoryData {
-  title: string;
-  image: string;
-  slug: string;
-}
+import { Category } from '../types/category.types';
 
-export const categoryData: CategoryData[] = [
+export const categoryData: Category[] = [
   {
     title: 'Fiction',
     image: '/icons/categories/fiction.svg',

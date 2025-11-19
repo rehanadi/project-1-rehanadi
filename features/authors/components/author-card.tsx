@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Icon } from '@iconify/react';
-import { Author } from '../types/author.type';
+import { Author } from '../types/author.types';
 import Link from 'next/link';
 
 const AuthorCard = ({ name, booksCount, image, link }: Author) => {

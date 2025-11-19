@@ -1,6 +1,9 @@
 'use client';
 
-import { type LogoConfig, logoConfigs } from '@/configs/logo.config';
+import {
+  type LogoConfig,
+  logoConfigs,
+} from '@/features/shared/configs/logo-config';
 import Image from 'next/image';
 
 const Logo = ({ size = 'large' }: LogoConfig) => {

@@ -1,4 +1,5 @@
-import { categoryData, CategoryData } from '@/constants/category-data';
+import { categoryData } from '@/features/categories/constants/category-data';
+import type { Category } from '@/features/categories/types/category.types';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -14,7 +15,7 @@ const Categories = () => {
 
 export default Categories;
 
-const CategoryCard = ({ title, image, slug }: CategoryData) => {
+const CategoryCard = ({ title, image, slug }: Category) => {
   return (
     <Link href={`/categories/${slug}`} className='block flex-1 basis-28'>
       <div className='group shadow-light flex flex-col gap-3 rounded-2xl bg-white p-2 md:p-3'>

@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import ResponsiveLogo from '@/components/logos/responsive-logo';
+import ResponsiveLogo from './responsive-logo';
 
 const Header = () => {
   return (

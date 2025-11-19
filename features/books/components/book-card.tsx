@@ -1,7 +1,6 @@
-import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Book } from '../types/book.type';
+import type { Book } from '../types/book.types';
 import BookRating from './book-rating';
 
 const BookCard = ({ title, author, rating, image, link }: Book) => {

@@ -1,4 +1,4 @@
-import { Author } from '../types/author.type';
+import { Author } from '../types/author.types';
 
 export const authorData: Author[] = [
   {

@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '@/components/headers/header';
-import Footer from '@/components/footers/footer';
+import Header from '@/features/shared/components/header';
+import Footer from '@/features/shared/components/footer';
 
 interface PublicLayoutProps {
   children: React.ReactNode;
