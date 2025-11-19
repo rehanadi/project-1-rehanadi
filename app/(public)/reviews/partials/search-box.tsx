@@ -8,7 +8,7 @@ const SearchBox = () => {
 
       <Input
         type='text'
-        placeholder='Search book'
+        placeholder='Search Reviews'
         className='text-sm-medium flex-1 border-0 outline-none'
       />
     </div>

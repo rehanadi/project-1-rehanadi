@@ -1,7 +1,7 @@
+import Title from '@/features/shared/components/title';
+
 const ProfileTitle = () => {
-  return (
-    <h1 className='md:text-display-sm text-display-xs font-bold'>Profile</h1>
-  );
+  return <Title>Profile</Title>;
 };
 
 export default ProfileTitle;

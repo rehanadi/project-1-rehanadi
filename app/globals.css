@@ -194,8 +194,12 @@
 /* end of shadcn theme */
 /* ---------------------------------------- */
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  @apply bg-white text-sm font-normal text-neutral-950;
+  @apply min-h-screen bg-white text-sm font-normal text-neutral-950;
 
   font-family: var(--font-poppins);
 }

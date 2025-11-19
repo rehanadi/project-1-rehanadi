@@ -19,7 +19,7 @@ const Header = () => {
           <Input
             type='text'
             placeholder='Search book'
-            className='input-search flex-1 border-0 outline-none'
+            className='flex-1 border-0 outline-none'
           />
         </div>
 
