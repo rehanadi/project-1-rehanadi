@@ -5,7 +5,7 @@ import { cartData } from '@/features/cart/constants/cart-data';
 import Separator from '@/features/shared/components/separator';
 import CartItemCheckbox from './cart-item-checkbox';
 
-const CartItems = () => {
+const CartList = () => {
   return (
     <div className='flex flex-1 flex-col gap-4 md:gap-6'>
       <div className='flex-start gap-4'>
@@ -25,4 +25,4 @@ const CartItems = () => {
   );
 };
 
-export default CartItems;
+export default CartList;
