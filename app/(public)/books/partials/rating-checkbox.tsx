@@ -1,13 +1,9 @@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Icon } from '@iconify/react';
+import type { Field } from '@/features/shared/types/field.types';
 
-interface CategoryCheckboxProps {
-  title: string;
-  value: string;
-}
-
-const RatingCheckbox = ({ title, value }: CategoryCheckboxProps) => {
+const RatingCheckbox = ({ label, value }: Field) => {
   return (
     <div className='flex-start gap-2 p-2'>
       <Checkbox id={value} />
@@ -16,7 +12,7 @@ const RatingCheckbox = ({ title, value }: CategoryCheckboxProps) => {
           icon='material-symbols:star-rounded'
           className='size-6 text-yellow-500'
         />
-        <span>{title}</span>
+        <span>{label}</span>
       </Label>
     </div>
   );

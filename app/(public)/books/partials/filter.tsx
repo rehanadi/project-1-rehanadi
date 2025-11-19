@@ -15,13 +15,12 @@ const Filter = () => {
       <div className='shadow-light hidden w-[266px] shrink-0 flex-col gap-6 rounded-xl bg-white py-4 md:flex'>
         <div className='flex flex-col gap-2.5 px-4'>
           <h3 className='text-md-bold uppercase'>Filter</h3>
-
           <h4 className='text-lg-bold'>Category</h4>
 
           {categoryData.map((category, index) => (
             <CategoryCheckbox
               key={index}
-              title={category.title}
+              label={category.title}
               value={category.slug}
             />
           ))}
@@ -36,7 +35,7 @@ const Filter = () => {
             {[5, 4, 3, 2, 1].map((rating) => (
               <RatingCheckbox
                 key={rating}
-                title={rating.toString()}
+                label={rating.toString()}
                 value={rating.toString()}
               />
             ))}
