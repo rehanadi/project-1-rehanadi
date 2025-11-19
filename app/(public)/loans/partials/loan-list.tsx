@@ -1,5 +1,6 @@
 import { loanData } from '@/features/loans/constants/loan-data';
 import LoanItemCard from '@/features/loans/components/loan-item-card';
+import { Button } from '@/components/ui/button';
 
 const LoanList = () => {
   return (
@@ -7,6 +8,10 @@ const LoanList = () => {
       {loanData.map((loan) => (
         <LoanItemCard key={loan.id} {...loan} />
       ))}
+
+      <Button className='w-37.5 self-center md:w-50' variant='outline'>
+        Load More
+      </Button>
     </div>
   );
 };
