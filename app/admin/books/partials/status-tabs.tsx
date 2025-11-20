@@ -8,9 +8,10 @@ interface StatusTab {
 const StatusTabs = () => {
   const statusTabs: StatusTab[] = [
     { label: 'All', variant: 'info-rounded' },
-    { label: 'Active', variant: 'outline-rounded' },
+    { label: 'Available', variant: 'outline-rounded' },
+    { label: 'Borrowed', variant: 'outline-rounded' },
     { label: 'Returned', variant: 'outline-rounded' },
-    { label: 'Overdue', variant: 'outline-rounded' },
+    { label: 'Damaged', variant: 'outline-rounded' },
   ];
 
   return (
@@ -23,4 +24,5 @@ const StatusTabs = () => {
     </div>
   );
 };
+
 export default StatusTabs;
