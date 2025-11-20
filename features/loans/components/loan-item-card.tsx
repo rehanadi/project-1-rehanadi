@@ -1,6 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import Separator from '@/features/shared/components/separator';
+import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
 import { LoanItem } from '../types/loan.types';
 

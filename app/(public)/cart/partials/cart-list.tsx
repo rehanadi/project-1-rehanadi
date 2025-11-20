@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { cartData } from '@/features/cart/constants/cart-data';
-import Separator from '@/features/shared/components/separator';
+import { Separator } from '@/components/ui/separator';
 import CartItemCheckbox from './cart-item-checkbox';
 
 const CartList = () => {

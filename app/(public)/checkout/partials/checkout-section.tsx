@@ -1,5 +1,5 @@
 import { Section } from '@/components/layouts/section';
-import Separator from '@/features/shared/components/separator';
+import { Separator } from '@/components/ui/separator';
 import UserInfo from './user-info';
 import BookList from './book-list';
 import CheckoutForm from './checkout-form';

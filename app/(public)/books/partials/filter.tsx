@@ -1,5 +1,5 @@
 import { categoryData } from '@/features/categories/constants/category-data';
-import Separator from '@/features/shared/components/separator';
+import { Separator } from '@/components/ui/separator';
 import { ListFilter } from 'lucide-react';
 import CategoryCheckbox from './category-checkbox';
 import RatingCheckbox from './rating-checkbox';

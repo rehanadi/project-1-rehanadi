@@ -1,6 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import Ratings from '@/features/shared/components/ratings';
-import Separator from '@/features/shared/components/separator';
+import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
 
 const ReviewItemCard = () => {

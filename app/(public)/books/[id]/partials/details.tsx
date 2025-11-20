@@ -1,4 +1,4 @@
-import Separator from '@/features/shared/components/separator';
+import { Separator } from '@/components/ui/separator';
 import BookRating from '@/features/books/components/book-rating';
 import Image from 'next/image';
 import Breadcrumbs from './breadcrumbs';
@@ -34,9 +34,9 @@ const Details = () => {
 
             <div className='flex flex-wrap gap-5'>
               <InfoCard title='Page' description='320' />
-              <Separator isVertical />
+              <Separator orientation='vertical' />
               <InfoCard title='Rating' description='212' />
-              <Separator isVertical />
+              <Separator orientation='vertical' />
               <InfoCard title='Reviews' description='179' />
             </div>
           </div>
