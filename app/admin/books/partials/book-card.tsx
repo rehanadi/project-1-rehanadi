@@ -15,7 +15,7 @@ const BookCard = ({ title, author, rating, image }: Book) => {
         <div className='flex flex-col gap-0.5'>
           <Badge variant='outline'>Business & Economics</Badge>
           <h3 className='text-sm font-bold md:text-lg'>{title}</h3>
-          <p className='md:text-md text-sm font-medium text-neutral-300'>
+          <p className='md:text-md text-sm font-medium text-neutral-700'>
             {author}
           </p>
           <BookRating rating={rating} />
@@ -26,10 +26,10 @@ const BookCard = ({ title, author, rating, image }: Book) => {
 
       <div className='hidden md:flex md:items-center md:gap-3.25'>
         <Button variant='outline' asChild className='h-12 w-[95px]'>
-          <Link href='#'>Preview</Link>
+          <Link href='/admin/books/1/preview'>Preview</Link>
         </Button>
         <Button variant='outline' asChild className='h-12 w-[95px]'>
-          <Link href='#'>Edit</Link>
+          <Link href='/admin/books/1/edit'>Edit</Link>
         </Button>
         <Button variant='danger' className='h-12 w-[95px]'>
           Delete
