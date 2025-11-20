@@ -1,5 +1,7 @@
 export interface LogoConfig {
   size?: 'small' | 'large';
+  width?: number;
+  height?: number;
 }
 
 export const logoConfigs = {
