@@ -40,6 +40,8 @@ export interface BookItem {
 export interface GetBooksParams {
   page?: number;
   limit?: number;
+  categoryId?: number;
+  q?: string;
 }
 
 export interface GetBooksResponse {
@@ -79,4 +81,11 @@ export interface BooksState {
     totalPages: number;
   } | null;
   recommendedBooks: BookItem[];
+  catalogBooks: BookItem[];
+  catalogPagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  } | null;
 }

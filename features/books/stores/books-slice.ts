@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { BooksState, BookItem, GetBooksResponse } from '../types/book.types';
+import { BookItem, BooksState, GetBooksResponse } from '../types/book.types';
 
 const initialState: BooksState = {
   books: [],
   pagination: null,
   recommendedBooks: [],
+  catalogBooks: [],
+  catalogPagination: null,
 };
 
 const booksSlice = createSlice({
@@ -29,6 +31,17 @@ const booksSlice = createSlice({
     clearRecommendedBooks: (state) => {
       state.recommendedBooks = [];
     },
+    setCatalogBooks: (
+      state,
+      action: PayloadAction<GetBooksResponse['data']>
+    ) => {
+      state.catalogBooks = action.payload.books;
+      state.catalogPagination = action.payload.pagination;
+    },
+    clearCatalogBooks: (state) => {
+      state.catalogBooks = [];
+      state.catalogPagination = null;
+    },
   },
 });
 
@@ -38,5 +51,7 @@ export const {
   clearBooks,
   setRecommendedBooks,
   clearRecommendedBooks,
+  setCatalogBooks,
+  clearCatalogBooks,
 } = booksSlice.actions;
 export default booksSlice.reducer;

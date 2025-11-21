@@ -8,8 +8,12 @@ import {
 
 export const booksApi = {
   getBooks: async (params: GetBooksParams = {}): Promise<GetBooksResponse> => {
-    const { page = 1, limit = 10 } = params;
-    return http.get<GetBooksResponse>(`/api/books?page=${page}&limit=${limit}`);
+    const { page = 1, limit = 10, categoryId, q } = params;
+    const categoryParam = categoryId ? `&categoryId=${categoryId}` : '';
+    const searchParam = q ? `&q=${encodeURIComponent(q)}` : '';
+    return http.get<GetBooksResponse>(
+      `/api/books?page=${page}&limit=${limit}${categoryParam}${searchParam}`
+    );
   },
 
   getRecommendedBooks: async (

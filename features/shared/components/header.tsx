@@ -8,9 +8,39 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import ResponsiveLogo from './responsive-logo';
 import { Button } from '@/components/ui/button';
 import { useAppSelector } from '@/lib/hooks';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useDebounce } from 'react-use';
 
 const Header = () => {
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
+
+  useDebounce(
+    () => {
+      if (searchValue.trim()) {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('q', searchValue.trim());
+        router.push(`/books?${params.toString()}`);
+      } else if (searchParams.get('q')) {
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete('q');
+        const queryString = params.toString();
+        router.push(queryString ? `/books?${queryString}` : '/books');
+      }
+    },
+    500,
+    [searchValue]
+  );
+
+  useEffect(() => {
+    const currentQuery = searchParams.get('q');
+    if (currentQuery !== searchValue) {
+      setSearchValue(currentQuery || '');
+    }
+  }, [searchParams]);
 
   return (
     <header className='shadow-light sticky inset-x-0 top-0 z-50 h-16 w-full gap-4 bg-white md:h-20'>
@@ -27,6 +57,8 @@ const Header = () => {
               <Input
                 type='text'
                 placeholder='Search book'
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
                 className='flex-1 border-0 outline-none'
               />
             </div>

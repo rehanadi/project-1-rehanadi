@@ -1,11 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
 import { booksApi } from './api';
 import { GetBooksParams, GetRecommendedBooksParams } from './types/book.types';
-import { getErrorMessage } from '@/lib/api';
 import { useAppDispatch } from '@/lib/hooks';
 import {
   appendBooks,
+  setCatalogBooks,
   setBooks,
   setRecommendedBooks,
 } from './stores/books-slice';
@@ -45,6 +44,22 @@ export const useGetRecommendedBooks = (
     queryFn: async () => {
       const response = await booksApi.getRecommendedBooks(params);
       dispatch(setRecommendedBooks(response.data.books));
+      return response;
+    },
+    retry: 1,
+    staleTime: 1000 * 60,
+    gcTime: 1000 * 60,
+  });
+};
+
+export const useGetCatalogBooks = (params: GetBooksParams = {}) => {
+  const dispatch = useAppDispatch();
+
+  return useQuery({
+    queryKey: ['catalogBooks', params.categoryId, params.page, params.limit],
+    queryFn: async () => {
+      const response = await booksApi.getBooks(params);
+      dispatch(setCatalogBooks(response.data));
       return response;
     },
     retry: 1,

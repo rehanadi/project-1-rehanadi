@@ -1,5 +1,5 @@
-import BooksContainer from './partials/books-container';
 import BooksSection from './partials/books-section';
+import BooksContainer from './partials/books-container';
 
 const BooksPage = () => {
   return (

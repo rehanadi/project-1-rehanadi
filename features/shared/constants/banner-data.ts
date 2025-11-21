@@ -6,17 +6,17 @@ export interface BannerData {
 
 export const bannerData: BannerData[] = [
   {
-    link: '/',
+    link: '/books',
     image: '/images/banner.png',
     title: 'Banner 1',
   },
   {
-    link: '/',
+    link: '/books',
     image: '/images/banner.png',
     title: 'Banner 2',
   },
   {
-    link: '/',
+    link: '/books',
     image: '/images/banner.png',
     title: 'Banner 3',
   },
