@@ -9,10 +9,13 @@ import Link from 'next/link';
 
 interface BookInfoProps {
   book: BookDetail;
+  onBorrow?: () => void;
+  isBorrowing?: boolean;
 }
 
-const BookInfo = ({ book }: BookInfoProps) => {
+const BookInfo = ({ book, onBorrow, isBorrowing = false }: BookInfoProps) => {
   const defaultImage = '/images/book-placeholder.png';
+  const isOutOfStock = book.availableCopies === 0;
 
   return (
     <div className='flex flex-col gap-9 md:flex-row'>
@@ -60,7 +63,17 @@ const BookInfo = ({ book }: BookInfoProps) => {
           <Button variant='outline' className='flex-1 md:w-50 md:flex-none'>
             Add to Cart
           </Button>
-          <Button className='flex-1 md:w-50 md:flex-none'>Borrow Book</Button>
+          <Button
+            className='flex-1 md:w-50 md:flex-none'
+            onClick={onBorrow}
+            disabled={isOutOfStock || isBorrowing}
+          >
+            {isBorrowing
+              ? 'Borrowing...'
+              : isOutOfStock
+                ? 'Out of Stock'
+                : 'Borrow Book'}
+          </Button>
           <Button size='icon' variant='outline' className='shrink-0'>
             <Share2 className='size-5' />
           </Button>

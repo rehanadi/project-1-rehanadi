@@ -1,7 +1,15 @@
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import Link from 'next/link';
+import dayjs from 'dayjs';
 
-const LoanSuccess = () => {
+interface LoanSuccessProps {
+  dueDate: string;
+}
+
+const LoanSuccess = ({ dueDate }: LoanSuccessProps) => {
+  const formattedDate = dayjs(dueDate).format('DD MMMM YYYY');
+
   return (
     <div className='flex w-[638px] max-w-full flex-col items-center gap-6 md:gap-8'>
       <Image
@@ -17,11 +25,13 @@ const LoanSuccess = () => {
         </h2>
         <p className='text-md text-center font-semibold md:text-lg'>
           Please return the book no later than{' '}
-          <span className='text-danger-500'>31 August 2025</span>
+          <span className='text-danger-500'>{formattedDate}</span>
         </p>
       </div>
 
-      <Button className='h-12 w-[286px] max-w-full'>See Borrowed List</Button>
+      <Button className='h-12 w-[286px] max-w-full' asChild>
+        <Link href='/loans'>See Borrowed List</Link>
+      </Button>
     </div>
   );
 };

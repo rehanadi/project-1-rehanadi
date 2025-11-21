@@ -8,3 +8,24 @@ export interface LoanItem {
   dueDate: string;
   durationDays: number;
 }
+
+export interface AddLoanPayload {
+  bookId: number;
+  days: number;
+}
+
+export interface AddLoanResponse {
+  success: true;
+  message: string;
+  data: {
+    loan: {
+      id: number;
+      userId: number;
+      bookId: number;
+      status: string;
+      borrowedAt: string;
+      dueAt: string;
+      returnedAt: string | null;
+    };
+  };
+}

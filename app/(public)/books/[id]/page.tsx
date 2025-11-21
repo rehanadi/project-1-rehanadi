@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import Details from './partials/details';
 import Reviews from './partials/reviews';
@@ -10,11 +10,14 @@ import BookContainer from './partials/book-container';
 import { useGetBook, useGetRelatedBooks } from '@/features/books/hooks';
 import { useAppSelector } from '@/lib/hooks';
 import { Skeleton } from '@/components/ui/skeleton';
+import LoanSuccess from '@/features/loans/components/loan-success';
 
 const BookPage = () => {
   const params = useParams();
   const router = useRouter();
   const bookId = Number(params.id);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [dueDate, setDueDate] = useState('');
 
   const { currentBook, relatedBooks } = useAppSelector((state) => state.books);
   const {
@@ -41,7 +44,22 @@ const BookPage = () => {
     }
   }, [isErrorBook, router]);
 
+  const handleBorrowSuccess = (returnDate: string) => {
+    setDueDate(returnDate);
+    setShowSuccess(true);
+  };
+
   const isCorrectBook = currentBook?.id === bookId;
+
+  if (showSuccess) {
+    return (
+      <BookContainer>
+        <div className='flex-center min-h-[400px]'>
+          <LoanSuccess dueDate={dueDate} />
+        </div>
+      </BookContainer>
+    );
+  }
 
   if (isLoadingBook || !isCorrectBook || !currentBook) {
     return (
@@ -71,7 +89,7 @@ const BookPage = () => {
 
   return (
     <BookContainer>
-      <Details book={currentBook} />
+      <Details book={currentBook} onBorrowSuccess={handleBorrowSuccess} />
       <Separator />
       <Reviews reviews={currentBook.reviews} rating={currentBook.rating} />
       <Separator />

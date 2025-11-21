@@ -2,6 +2,7 @@ import BookRating from '@/features/books/components/book-rating';
 import { Review } from '@/features/books/types/book.types';
 import ReviewCard from '@/features/reviews/components/review-card';
 import { Button } from '@/components/ui/button';
+import dayjs from 'dayjs';
 
 interface ReviewsProps {
   reviews: Review[];
@@ -44,11 +45,7 @@ const Reviews = ({ reviews, rating }: ReviewsProps) => {
             key={review.id}
             name={review.user.name}
             image='/images/avatar.png'
-            date={new Date(review.createdAt).toLocaleDateString('id-ID', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            })}
+            date={dayjs(review.createdAt).format('DD MMMM YYYY, HH:mm')}
             rating={review.star}
             comment={review.comment}
             className='flex-1 basis-[48%]'
