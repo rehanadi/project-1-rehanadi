@@ -4,37 +4,48 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Share2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { BookDetail } from '../types/book.types';
+import Link from 'next/link';
 
-const BookInfo = () => {
+interface BookInfoProps {
+  book: BookDetail;
+}
+
+const BookInfo = ({ book }: BookInfoProps) => {
+  const defaultImage = '/images/book-placeholder.png';
+
   return (
     <div className='flex flex-col gap-9 md:flex-row'>
       <div className='relative aspect-337/498 w-2/3 shrink-0 self-center md:w-1/3'>
-        <Image
-          src='/images/books/the-psychology-of-money.png'
-          alt='The Psychology of Money Book'
-          fill
-        />
+        <Image src={book.coverImage || defaultImage} alt={book.title} fill />
       </div>
 
       <div className='flex flex-1 flex-col gap-4 md:gap-5'>
         <div className='flex flex-col gap-3 md:gap-5.5'>
           <div className='flex flex-col items-start gap-0.5 md:gap-1'>
-            <Badge variant='outline'>Business & Economics</Badge>
+            <Link href={`/books?categoryId=${book.category.id}`}>
+              <Badge variant='outline'>{book.category.name}</Badge>
+            </Link>
             <h1 className='text-display-xs md:text-display-sm font-bold'>
-              The Psychology of Money
+              {book.title}
             </h1>
-            <p className='text-sm-semibold md:text-md-semibold text-neutral-700'>
-              Morgan Housel
-            </p>
-            <BookRating rating={4.9} />
+            <Link href={`/authors/${book.author.id}`}>
+              <p className='text-sm-semibold md:text-md-semibold hover:text-primary-300 text-neutral-700 transition-colors'>
+                {book.author.name}
+              </p>
+            </Link>
+            <BookRating rating={book.rating} />
           </div>
 
           <div className='flex flex-wrap gap-5'>
-            <InfoCard title='Page' description='320' />
+            <InfoCard title='Page' description={book.totalCopies.toString()} />
             <Separator orientation='vertical' />
-            <InfoCard title='Rating' description='212' />
+            <InfoCard title='Rating' description={book.rating.toString()} />
             <Separator orientation='vertical' />
-            <InfoCard title='Reviews' description='179' />
+            <InfoCard
+              title='Reviews'
+              description={book.reviewCount.toString()}
+            />
           </div>
         </div>
 
@@ -42,13 +53,7 @@ const BookInfo = () => {
 
         <div className='flex flex-col gap-1'>
           <h2 className='text-xl-bold'>Description</h2>
-          <p className='text-sm-medium md:text-md-medium'>
-            The Psychology of Money” explores how emotions, biases, and human
-            behavior shape the way we think about money, investing, and
-            financial decisions. Morgan Housel shares timeless lessons on
-            wealth, greed, and happiness, showing that financial success is not
-            about knowledge, but about behavior.
-          </p>
+          <p className='text-sm-medium md:text-md-medium'>{book.description}</p>
         </div>
 
         <div className='fixed inset-x-0 bottom-0 z-50 flex w-full items-start justify-between gap-3 bg-white p-4 md:static md:justify-start md:bg-transparent md:p-0'>

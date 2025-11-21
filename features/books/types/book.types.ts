@@ -37,6 +37,29 @@ export interface BookItem {
   };
 }
 
+export interface Review {
+  id: number;
+  star: number;
+  comment: string;
+  userId: number;
+  bookId: number;
+  createdAt: string;
+  user: {
+    id: number;
+    name: string;
+  };
+}
+
+export interface BookDetail extends BookItem {
+  reviews: Review[];
+}
+
+export interface GetBookResponse {
+  success: true;
+  message: string;
+  data: BookDetail;
+}
+
 export interface GetBooksParams {
   page?: number;
   limit?: number;
@@ -88,4 +111,6 @@ export interface BooksState {
     total: number;
     totalPages: number;
   } | null;
+  currentBook: BookDetail | null;
+  relatedBooks: BookItem[];
 }

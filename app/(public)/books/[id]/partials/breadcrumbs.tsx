@@ -6,8 +6,13 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { BookDetail } from '@/features/books/types/book.types';
 
-const Breadcrumbs = () => {
+interface BreadcrumbsProps {
+  book: BookDetail;
+}
+
+const Breadcrumbs = ({ book }: BreadcrumbsProps) => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -16,11 +21,13 @@ const Breadcrumbs = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href='/'>Category</BreadcrumbLink>
+          <BreadcrumbLink href={`/books?categoryId=${book.category.id}`}>
+            {book.category.name}
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>The Psychology of Money</BreadcrumbPage>
+          <BreadcrumbPage>{book.title}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
