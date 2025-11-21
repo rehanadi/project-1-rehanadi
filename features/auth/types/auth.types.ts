@@ -18,3 +18,47 @@ export interface AuthFormType {
   footerLinkText?: string;
   footerLinkHref?: string;
 }
+
+export interface RegisterPayload {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface RegisterResponse {
+  success: true;
+  message: string;
+  data: {
+    id: number;
+    name: string;
+    email: string;
+    role: string;
+  };
+}
+
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+}
+
+export interface LoginResponse {
+  success: true;
+  message: string;
+  data: {
+    token: string;
+    user: User;
+  };
+}
+
+export interface AuthState {
+  token: string | null;
+  user: User | null;
+  isAuthenticated: boolean;
+}

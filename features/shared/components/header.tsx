@@ -1,3 +1,5 @@
+'use client';
+
 import { ChevronDown, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
@@ -5,9 +7,10 @@ import { Icon } from '@iconify/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import ResponsiveLogo from './responsive-logo';
 import { Button } from '@/components/ui/button';
+import { useAppSelector } from '@/lib/hooks';
 
 const Header = () => {
-  const isLoggedIn = false;
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
   return (
     <header className='shadow-light sticky inset-x-0 top-0 z-50 h-16 w-full gap-4 bg-white md:h-20'>
@@ -16,7 +19,7 @@ const Header = () => {
           <ResponsiveLogo />
         </Link>
 
-        {isLoggedIn ? (
+        {isAuthenticated ? (
           <>
             <div className='hidden h-11 w-[500px] items-center gap-1 rounded-full border border-neutral-300 px-4 md:flex md:gap-1.5'>
               <Search className='size-5 shrink-0 text-neutral-600' />
@@ -41,11 +44,11 @@ const Header = () => {
               <div className='flex-center cursor-pointer gap-4'>
                 <Avatar className='size-10 md:size-12'>
                   <AvatarImage src='/images/avatar.png' />
-                  <AvatarFallback>User</AvatarFallback>
+                  <AvatarFallback>{user?.name?.[0] || 'U'}</AvatarFallback>
                 </Avatar>
 
                 <span className='text-lg-semibold hidden md:block'>
-                  John Doe
+                  {user?.name || 'User'}
                 </span>
 
                 <ChevronDown className='hidden size-6 cursor-pointer md:block' />
