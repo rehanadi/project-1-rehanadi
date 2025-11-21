@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthorsState, AuthorItem } from '../types/author.types';
+import { AuthorsState, AuthorItem, AuthorBook } from '../types/author.types';
 
 const initialState: AuthorsState = {
   authors: [],
+  authorBooks: {},
+  currentAuthor: null,
 };
 
 const authorsSlice = createSlice({
@@ -15,8 +17,26 @@ const authorsSlice = createSlice({
     clearAuthors: (state) => {
       state.authors = [];
     },
+    setAuthorBooks: (
+      state,
+      action: PayloadAction<{ authorId: number; books: AuthorBook[] }>
+    ) => {
+      state.authorBooks[action.payload.authorId] = action.payload.books;
+    },
+    setCurrentAuthor: (state, action: PayloadAction<AuthorItem>) => {
+      state.currentAuthor = action.payload;
+    },
+    clearCurrentAuthor: (state) => {
+      state.currentAuthor = null;
+    },
   },
 });
 
-export const { setAuthors, clearAuthors } = authorsSlice.actions;
+export const {
+  setAuthors,
+  clearAuthors,
+  setAuthorBooks,
+  setCurrentAuthor,
+  clearCurrentAuthor,
+} = authorsSlice.actions;
 export default authorsSlice.reducer;

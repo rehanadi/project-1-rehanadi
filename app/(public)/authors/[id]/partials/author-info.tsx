@@ -1,14 +1,13 @@
 import AuthorCard from '@/features/authors/components/author-card';
+import { AuthorItem } from '@/features/authors/types/author.types';
 
-const AuthorInfo = () => {
-  return (
-    <AuthorCard
-      name='Author Name'
-      booksCount={5}
-      image='/images/avatar.png'
-      link='/authors/author-id'
-    />
-  );
+interface AuthorInfoProps {
+  author: AuthorItem;
+  booksCount: number;
+}
+
+const AuthorInfo = ({ author, booksCount }: AuthorInfoProps) => {
+  return <AuthorCard author={author} booksCount={booksCount} />;
 };
 
 export default AuthorInfo;

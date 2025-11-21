@@ -17,7 +17,7 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
 
   return (
     <Link
-      href={`/books/categoryId=${category.id}`}
+      href={`/books?categoryId=${category.id}`}
       className='block flex-1 basis-28'
     >
       <div className='group shadow-light flex flex-col gap-3 rounded-2xl bg-white p-2 md:p-3'>

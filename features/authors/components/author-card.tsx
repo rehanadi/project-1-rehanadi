@@ -2,13 +2,19 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Icon } from '@iconify/react';
 import { AuthorItem } from '../types/author.types';
 import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface AuthorCardProps {
   author: AuthorItem;
   booksCount?: number;
+  isLoadingCount?: boolean;
 }
 
-const AuthorCard = ({ author, booksCount = 0 }: AuthorCardProps) => {
+const AuthorCard = ({
+  author,
+  booksCount,
+  isLoadingCount,
+}: AuthorCardProps) => {
   return (
     <div className='shadow-light flex-start flex gap-3 rounded-xl p-3 md:gap-4 md:p-4'>
       <Link href={`/authors/${author.id}`}>
@@ -29,9 +35,13 @@ const AuthorCard = ({ author, booksCount = 0 }: AuthorCardProps) => {
             icon='material-symbols:book'
             className='text-primary-300 size-6'
           />
-          <span className='text-sm-medium md:text-md-medium'>
-            {booksCount} books
-          </span>
+          {isLoadingCount ? (
+            <Skeleton className='h-4 w-16' />
+          ) : (
+            <span className='text-sm-medium md:text-md-medium'>
+              {booksCount || 0} books
+            </span>
+          )}
         </div>
       </div>
     </div>
