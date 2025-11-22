@@ -46,6 +46,7 @@ export interface User {
   name: string;
   email: string;
   role: string;
+  createdAt?: string;
 }
 
 export interface LoginResponse {
@@ -54,6 +55,21 @@ export interface LoginResponse {
   data: {
     token: string;
     user: User;
+  };
+}
+
+export interface GetMyProfileResponse {
+  success: true;
+  message: string;
+  data: {
+    profile: User;
+    loanStats: {
+      borrowed: number;
+      late: number;
+      returned: number;
+      total: number;
+    };
+    reviewsCount: number;
   };
 }
 

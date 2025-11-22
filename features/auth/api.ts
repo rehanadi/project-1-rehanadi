@@ -4,6 +4,7 @@ import {
   LoginResponse,
   RegisterPayload,
   RegisterResponse,
+  GetMyProfileResponse,
 } from './types/auth.types';
 
 export const authApi = {
@@ -13,5 +14,9 @@ export const authApi = {
 
   login: async (payload: LoginPayload): Promise<LoginResponse> => {
     return http.post<LoginResponse>('/api/auth/login', payload);
+  },
+
+  getMyProfile: async (): Promise<GetMyProfileResponse> => {
+    return http.get<GetMyProfileResponse>('/api/me');
   },
 };

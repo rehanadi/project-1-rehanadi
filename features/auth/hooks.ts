@@ -1,11 +1,11 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { authApi } from './api';
 import { LoginPayload, RegisterPayload } from './types/auth.types';
 import { getErrorMessage } from '@/lib/api';
 import { useAppDispatch } from '@/lib/hooks';
-import { setCredentials } from './stores/auth-slice';
+import { setCredentials, setUser } from './stores/auth-slice';
 
 export const useRegister = () => {
   const router = useRouter();
@@ -46,5 +46,21 @@ export const useLogin = () => {
     onError: (error) => {
       toast.error(getErrorMessage(error));
     },
+  });
+};
+
+export const useGetMyProfile = () => {
+  const dispatch = useAppDispatch();
+
+  return useQuery({
+    queryKey: ['myProfile'],
+    queryFn: async () => {
+      const response = await authApi.getMyProfile();
+      dispatch(setUser(response.data.profile));
+      return response;
+    },
+    retry: 1,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 5,
   });
 };
