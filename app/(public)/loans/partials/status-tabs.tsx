@@ -1,26 +1,27 @@
 import { Badge } from '@/components/ui/badge';
 
-interface StatusTab {
-  label: string;
-  variant: 'info-rounded' | 'outline-rounded';
+interface StatusTabsProps {
+  value: string;
+  onChange: (value: string) => void;
 }
 
-const StatusTabs = () => {
-  const statusTabs: StatusTab[] = [
-    { label: 'All', variant: 'info-rounded' },
-    { label: 'Active', variant: 'outline-rounded' },
-    { label: 'Returned', variant: 'outline-rounded' },
-    { label: 'Overdue', variant: 'outline-rounded' },
-  ];
+const StatusTabs = ({ value, onChange }: StatusTabsProps) => {
+  const statusTabs = ['All', 'Active', 'Returned', 'Overdue'];
 
   return (
     <div className='flex-start flex-wrap gap-2 md:gap-3'>
       {statusTabs.map((tab) => (
-        <Badge key={tab.label} variant={tab.variant} className='cursor-pointer'>
-          {tab.label}
+        <Badge
+          key={tab}
+          variant={value === tab ? 'info-rounded' : 'outline-rounded'}
+          className='cursor-pointer'
+          onClick={() => onChange(tab)}
+        >
+          {tab}
         </Badge>
       ))}
     </div>
   );
 };
+
 export default StatusTabs;

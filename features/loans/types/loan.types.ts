@@ -29,3 +29,30 @@ export interface AddLoanResponse {
     };
   };
 }
+
+export interface MyLoan {
+  id: number;
+  userId: number;
+  bookId: number;
+  status: 'BORROWED' | 'RETURNED' | 'OVERDUE';
+  borrowedAt: string;
+  dueAt: string;
+  returnedAt: string | null;
+  book: {
+    id: number;
+    title: string;
+    coverImage: string | null;
+  };
+}
+
+export interface GetMyLoansResponse {
+  success: true;
+  message: string;
+  data: {
+    loans: MyLoan[];
+  };
+}
+
+export interface LoansState {
+  myLoans: MyLoan[];
+}

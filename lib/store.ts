@@ -3,6 +3,7 @@ import authReducer from '@/features/auth/stores/auth-slice';
 import booksReducer from '@/features/books/stores/books-slice';
 import categoriesReducer from '@/features/categories/stores/categories-slice';
 import authorsReducer from '@/features/authors/stores/authors-slice';
+import loansReducer from '@/features/loans/stores/loans-slice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     books: booksReducer,
     categories: categoriesReducer,
     authors: authorsReducer,
+    loans: loansReducer,
   },
 });
 
