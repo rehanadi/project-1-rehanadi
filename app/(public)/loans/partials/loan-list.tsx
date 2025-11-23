@@ -8,40 +8,32 @@ import { useMemo } from 'react';
 interface LoanListProps {
   loans: MyLoan[];
   searchQuery: string;
-  statusFilter: string;
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  } | null;
   isLoading: boolean;
+  onLoadMore: () => void;
 }
 
 const LoanList = ({
   loans,
   searchQuery,
-  statusFilter,
+  pagination,
   isLoading,
+  onLoadMore,
 }: LoanListProps) => {
   const filteredLoans = useMemo(() => {
-    let filtered = loans;
+    if (!searchQuery) return loans;
 
-    if (searchQuery) {
-      filtered = filtered.filter((loan) =>
-        loan.book.title.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
+    return loans.filter((loan) =>
+      loan.book.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [loans, searchQuery]);
 
-    if (statusFilter !== 'All') {
-      const statusMap: Record<string, string> = {
-        Active: 'BORROWED',
-        Returned: 'RETURNED',
-        Overdue: 'OVERDUE',
-      };
-      filtered = filtered.filter(
-        (loan) => loan.status === statusMap[statusFilter]
-      );
-    }
-
-    return filtered;
-  }, [loans, searchQuery, statusFilter]);
-
-  if (isLoading) {
+  if (isLoading && loans.length === 0) {
     return (
       <div className='flex flex-col gap-3.75 md:gap-4'>
         {Array.from({ length: 3 }).map((_, index) => (
@@ -72,12 +64,12 @@ const LoanList = ({
   if (filteredLoans.length === 0) {
     return (
       <div className='text-center text-neutral-600'>
-        {searchQuery || statusFilter !== 'All'
-          ? 'No loans found.'
-          : 'You have no borrowed books yet.'}
+        {searchQuery ? 'No loans found.' : 'You have no borrowed books yet.'}
       </div>
     );
   }
+
+  const showLoadMore = pagination && loans.length < pagination.total;
 
   return (
     <div className='flex flex-col gap-3.75 md:gap-4'>
@@ -85,8 +77,16 @@ const LoanList = ({
         <LoanItemCard key={loan.id} loan={loan} />
       ))}
 
-      {filteredLoans.length > 10 && (
-        <Button className='w-37.5 self-center md:w-50' variant='outline'>
+      {isLoading && loans.length > 0 && (
+        <div className='text-center'>Loading...</div>
+      )}
+
+      {showLoadMore && !isLoading && (
+        <Button
+          className='w-37.5 self-center md:w-50'
+          variant='outline'
+          onClick={onLoadMore}
+        >
           Load More
         </Button>
       )}

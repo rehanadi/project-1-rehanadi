@@ -34,7 +34,7 @@ export interface MyLoan {
   id: number;
   userId: number;
   bookId: number;
-  status: 'BORROWED' | 'RETURNED' | 'OVERDUE';
+  status: 'BORROWED' | 'RETURNED' | 'LATE';
   borrowedAt: string;
   dueAt: string;
   returnedAt: string | null;
@@ -45,14 +45,32 @@ export interface MyLoan {
   };
 }
 
+export interface GetMyLoansParams {
+  page?: number;
+  limit?: number;
+  status?: 'BORROWED' | 'RETURNED' | 'LATE';
+}
+
 export interface GetMyLoansResponse {
   success: true;
   message: string;
   data: {
     loans: MyLoan[];
+    pagination: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPages: number;
+    };
   };
 }
 
 export interface LoansState {
   myLoans: MyLoan[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  } | null;
 }

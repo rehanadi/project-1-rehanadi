@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { loansApi } from './api';
-import { AddLoanPayload } from './types/loan.types';
+import { AddLoanPayload, GetMyLoansParams } from './types/loan.types';
 import { getErrorMessage } from '@/lib/api';
 import { useAppDispatch } from '@/lib/hooks';
-import { setMyLoans } from './stores/loans-slice';
+import { appendMyLoans, setMyLoans } from './stores/loans-slice';
 
 export const useAddLoan = () => {
   const queryClient = useQueryClient();
@@ -25,14 +25,23 @@ export const useAddLoan = () => {
   });
 };
 
-export const useGetMyLoans = () => {
+export const useGetMyLoans = (
+  params: GetMyLoansParams = {},
+  isLoadMore = false
+) => {
   const dispatch = useAppDispatch();
 
   return useQuery({
-    queryKey: ['myLoans'],
+    queryKey: ['myLoans', params.page, params.limit, params.status],
     queryFn: async () => {
-      const response = await loansApi.getMyLoans();
-      dispatch(setMyLoans(response.data.loans));
+      const response = await loansApi.getMyLoans(params);
+
+      if (isLoadMore) {
+        dispatch(appendMyLoans(response.data));
+      } else {
+        dispatch(setMyLoans(response.data));
+      }
+
       return response;
     },
     retry: 1,

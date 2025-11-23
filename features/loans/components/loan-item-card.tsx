@@ -12,13 +12,10 @@ interface LoanItemCardProps {
 }
 
 const LoanItemCard = ({ loan }: LoanItemCardProps) => {
-  const { data: bookData, isLoading: isLoadingBook } = useGetBook(
-    loan.bookId,
-    false
-  );
+  const { data: bookData, isLoading: isLoadingBook } = useGetBook(loan.bookId);
 
   const getStatusVariant = (status: string) => {
-    if (status === 'OVERDUE') return 'danger';
+    if (status === 'LATE') return 'danger';
     if (status === 'RETURNED') return 'outline';
     return 'success';
   };
