@@ -4,8 +4,12 @@ import CartItemCard from '@/features/cart/components/cart-item-card';
 import { CartItem } from '@/features/cart/types/cart.types';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { toggleSelectItem } from '@/features/cart/stores/cart-slice';
+import {
+  toggleSelectItem,
+  updateCartItemDetails,
+} from '@/features/cart/stores/cart-slice';
 import { useGetBook } from '@/features/books/hooks';
+import { useEffect } from 'react';
 
 interface CartItemCheckboxProps {
   item: CartItem;
@@ -21,6 +25,18 @@ const CartItemCheckbox = ({ item }: CartItemCheckboxProps) => {
     true
   );
 
+  useEffect(() => {
+    if (bookData?.data) {
+      dispatch(
+        updateCartItemDetails({
+          bookId: item.bookId,
+          authorName: bookData.data.Author.name,
+          categoryName: bookData.data.Category.name,
+        })
+      );
+    }
+  }, [bookData, dispatch, item.bookId]);
+
   const handleToggle = () => {
     dispatch(toggleSelectItem(item.id));
   };
@@ -34,8 +50,8 @@ const CartItemCheckbox = ({ item }: CartItemCheckboxProps) => {
       />
       <CartItemCard
         title={item.book.title}
-        author={bookData?.data.Author.name || ''}
-        category={bookData?.data.Category.name || ''}
+        author={item.authorName || bookData?.data.Author.name || ''}
+        category={item.categoryName || bookData?.data.Category.name || ''}
         image={item.book.coverImage || '/images/book-placeholder.png'}
         isLoadingDetails={isLoadingBookDetails}
       />

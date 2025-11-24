@@ -4,7 +4,11 @@ import UserInfo from './user-info';
 import BookList from './book-list';
 import CheckoutForm from './checkout-form';
 
-const CheckoutSection = () => {
+interface CheckoutSectionProps {
+  onSuccess: (returnDate: string) => void;
+}
+
+const CheckoutSection = ({ onSuccess }: CheckoutSectionProps) => {
   return (
     <Section title='Checkout'>
       <div className='flex flex-col gap-6 md:flex-row md:gap-14.5'>
@@ -14,7 +18,7 @@ const CheckoutSection = () => {
           <BookList />
         </div>
 
-        <CheckoutForm />
+        <CheckoutForm onSuccess={onSuccess} />
       </div>
     </Section>
   );

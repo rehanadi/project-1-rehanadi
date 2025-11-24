@@ -15,6 +15,8 @@ export interface CartItem {
   priceSnapshot: number;
   subtotal: number;
   book: CartBook;
+  authorName?: string;
+  categoryName?: string;
 }
 
 export interface GetMyCartResponse {

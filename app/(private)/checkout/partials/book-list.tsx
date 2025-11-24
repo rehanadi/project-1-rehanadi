@@ -1,12 +1,24 @@
+'use client';
+
 import CartItemCard from '@/features/cart/components/cart-item-card';
-import { cartData } from '@/features/cart/constants/cart-data';
+import { useAppSelector } from '@/lib/hooks';
 
 const BookList = () => {
+  const { items, selectedItems } = useAppSelector((state) => state.cart);
+
+  const selectedBooks = items.filter((item) => selectedItems.includes(item.id));
+
   return (
     <div className='flex flex-col gap-4'>
       <h3 className='md:text-display-xs text-lg font-bold'>Book List</h3>
-      {cartData.slice(0, 2).map((item) => (
-        <CartItemCard key={item.id} {...item} />
+      {selectedBooks.map((item) => (
+        <CartItemCard
+          key={item.id}
+          title={item.book.title}
+          author={item.authorName || ''}
+          category={item.categoryName || ''}
+          image={item.book.coverImage || '/images/book-placeholder.png'}
+        />
       ))}
     </div>
   );

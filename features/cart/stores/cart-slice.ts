@@ -24,6 +24,22 @@ const cartSlice = createSlice({
       state.items = action.payload.items;
       state.grandTotal = action.payload.grandTotal;
     },
+    updateCartItemDetails: (
+      state,
+      action: PayloadAction<{
+        bookId: number;
+        authorName: string;
+        categoryName: string;
+      }>
+    ) => {
+      const item = state.items.find(
+        (item) => item.bookId === action.payload.bookId
+      );
+      if (item) {
+        item.authorName = action.payload.authorName;
+        item.categoryName = action.payload.categoryName;
+      }
+    },
     toggleSelectItem: (state, action: PayloadAction<number>) => {
       const itemId = action.payload;
       const index = state.selectedItems.indexOf(itemId);
@@ -51,6 +67,7 @@ const cartSlice = createSlice({
 
 export const {
   setCart,
+  updateCartItemDetails,
   toggleSelectItem,
   selectAllItems,
   clearSelectedItems,
