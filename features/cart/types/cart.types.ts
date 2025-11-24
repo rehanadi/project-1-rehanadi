@@ -1,9 +1,30 @@
-export interface CartItem {
-  id: string;
+export interface CartBook {
+  id: number;
   title: string;
-  author: string;
-  category: string;
-  image: string;
+  price: number;
+  coverImage: string | null;
+  isActive: boolean;
+  stock: number;
+  isbn: string;
+}
+
+export interface CartItem {
+  id: number;
+  bookId: number;
+  qty: number;
+  priceSnapshot: number;
+  subtotal: number;
+  book: CartBook;
+}
+
+export interface GetMyCartResponse {
+  success: true;
+  message: string;
+  data: {
+    cartId: number;
+    items: CartItem[];
+    grandTotal: number;
+  };
 }
 
 export interface AddCartPayload {
@@ -26,5 +47,8 @@ export interface AddCartResponse {
 }
 
 export interface CartState {
+  cartId: number | null;
   items: CartItem[];
+  grandTotal: number;
+  selectedItems: number[];
 }

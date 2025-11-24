@@ -11,12 +11,18 @@ import { useAppSelector } from '@/lib/hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'react-use';
+import { useGetMyCart } from '@/features/cart/hooks';
 
 const Header = () => {
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+  const { items } = useAppSelector((state) => state.cart);
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
+
+  useGetMyCart();
+
+  const totalCartItems = items.length;
 
   useDebounce(
     () => {
@@ -66,11 +72,13 @@ const Header = () => {
             <div className='flex-center gap-6'>
               <Search className='block size-6 shrink-0 md:hidden' />
 
-              <Link href='#' className='relative'>
+              <Link href='/cart' className='relative'>
                 <Icon icon='lets-icons:bag-fill' className='size-7 md:size-8' />
-                <div className='bg-danger-500 flex-center text-xs-bold absolute -top-1 -right-1 size-5 rounded-full text-white'>
-                  1
-                </div>
+                {totalCartItems > 0 && (
+                  <div className='bg-danger-500 flex-center text-xs-bold absolute -top-1 -right-1 size-5 rounded-full text-white'>
+                    {totalCartItems}
+                  </div>
+                )}
               </Link>
 
               <div className='flex-center cursor-pointer gap-4'>

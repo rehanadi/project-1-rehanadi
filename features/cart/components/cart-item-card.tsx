@@ -1,25 +1,48 @@
-import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
-import type { CartItem } from '../types/cart.types';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+
+interface CartItemCardProps {
+  title: string;
+  author: string;
+  category: string;
+  image: string;
+  isLoadingDetails?: boolean;
+}
 
 const CartItemCard = ({
   title,
   author,
   category,
   image,
-}: Omit<CartItem, 'id'>) => {
-  return (
-    <div className='flex items-center justify-start gap-3 md:gap-4'>
-      <div className='relative h-[106px] w-[70px] md:h-[138px] md:w-[92px]'>
-        <Image src={image} alt={title} fill />
-      </div>
+  isLoadingDetails = false,
+}: CartItemCardProps) => {
+  const defaultImage = '/images/book-placeholder.png';
 
-      <div className='flex flex-col gap-1'>
-        <Badge variant='outline'>{category}</Badge>
-        <h3 className='text-md-bold md:text-lg-bold'>{title}</h3>
-        <p className='text-sm-medium md:text-md-medium text-neutral-700'>
-          {author}
-        </p>
+  return (
+    <div className='flex flex-1 items-center gap-3 md:gap-4'>
+      <Image
+        src={image || defaultImage}
+        alt={title}
+        width={64}
+        height={96}
+        className='shrink-0'
+      />
+
+      <div className='flex flex-1 flex-col gap-1'>
+        {isLoadingDetails ? (
+          <Skeleton className='h-5 w-20' />
+        ) : (
+          <Badge variant='outline'>{category || 'Category'}</Badge>
+        )}
+        <h3 className='text-md-bold md:text-lg-bold line-clamp-1'>{title}</h3>
+        {isLoadingDetails ? (
+          <Skeleton className='h-4 w-32' />
+        ) : (
+          <p className='text-sm-medium md:text-md-medium text-neutral-700'>
+            {author || 'Author name'}
+          </p>
+        )}
       </div>
     </div>
   );
