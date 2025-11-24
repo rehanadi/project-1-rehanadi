@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/lib/hooks';
 import Header from '@/features/shared/components/header';
 import Footer from '@/features/shared/components/footer';
@@ -13,15 +13,25 @@ interface PublicLayoutProps {
 const PublicLayout = ({ children }: PublicLayoutProps) => {
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const router = useRouter();
-  const pathname = usePathname();
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsChecking(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (isChecking) return;
+
     if (isAuthenticated && user?.role === 'ADMIN') {
       router.push('/admin/users');
     }
-  }, [isAuthenticated, user, router, pathname]);
+  }, [isAuthenticated, user, router, isChecking]);
 
-  if (isAuthenticated && user?.role === 'ADMIN') {
+  if (!isChecking && isAuthenticated && user?.role === 'ADMIN') {
     return null;
   }
 

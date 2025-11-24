@@ -52,8 +52,8 @@ const LoanItemCard = ({ loan }: LoanItemCardProps) => {
       <div className='flex flex-col gap-6 md:flex-row md:items-center md:justify-between md:gap-4'>
         <div className='flex-center gap-4'>
           <Image
-            src={loan.book.coverImage || defaultImage}
-            alt={loan.book.title}
+            src={loan.Book.coverImage || defaultImage}
+            alt={loan.Book.title}
             width={92}
             height={138}
             className='shrink-0'
@@ -68,7 +68,7 @@ const LoanItemCard = ({ loan }: LoanItemCardProps) => {
               </Badge>
             )}
 
-            <h3 className='text-md font-bold md:text-xl'>{loan.book.title}</h3>
+            <h3 className='text-md font-bold md:text-xl'>{loan.Book.title}</h3>
 
             {isLoadingBook ? (
               <Skeleton className='h-4 w-32' />

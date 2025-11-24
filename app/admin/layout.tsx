@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/lib/hooks';
 import Header from '@/features/shared/components/admin/header';
@@ -12,16 +12,27 @@ interface AdminLayoutProps {
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const router = useRouter();
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsChecking(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (isChecking) return;
+
     if (!isAuthenticated) {
       router.push('/login');
     } else if (user?.role === 'USER') {
       router.push('/');
     }
-  }, [isAuthenticated, user, router]);
+  }, [isAuthenticated, user, router, isChecking]);
 
-  if (!isAuthenticated || user?.role !== 'ADMIN') {
+  if (isChecking || !isAuthenticated || user?.role !== 'ADMIN') {
     return null;
   }
 

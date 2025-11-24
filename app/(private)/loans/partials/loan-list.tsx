@@ -28,7 +28,7 @@ const LoanList = ({
     if (!searchQuery) return loans;
 
     return loans.filter((loan) =>
-      loan.book.title.toLowerCase().includes(searchQuery.toLowerCase())
+      loan.Book.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [loans, searchQuery]);
 

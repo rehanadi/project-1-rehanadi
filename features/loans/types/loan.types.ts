@@ -38,7 +38,7 @@ export interface MyLoan {
   borrowedAt: string;
   dueAt: string;
   returnedAt: string | null;
-  book: {
+  Book: {
     id: number;
     title: string;
     coverImage: string | null;
