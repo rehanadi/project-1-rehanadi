@@ -11,11 +11,19 @@ interface BookInfoProps {
   book: BookDetail;
   onBorrow?: () => void;
   isBorrowing?: boolean;
+  onAddCart?: () => void;
+  isAddingCart?: boolean;
 }
 
-const BookInfo = ({ book, onBorrow, isBorrowing = false }: BookInfoProps) => {
+const BookInfo = ({
+  book,
+  onBorrow,
+  isBorrowing = false,
+  onAddCart,
+  isAddingCart = false,
+}: BookInfoProps) => {
   const defaultImage = '/images/book-placeholder.png';
-  const isOutOfStock = book.availableCopies === 0;
+  const isOutOfStock = book.stock === 0;
 
   return (
     <div className='flex flex-col gap-9 md:flex-row'>
@@ -60,8 +68,17 @@ const BookInfo = ({ book, onBorrow, isBorrowing = false }: BookInfoProps) => {
         </div>
 
         <div className='fixed inset-x-0 bottom-0 z-50 flex w-full items-start justify-between gap-3 bg-white p-4 md:static md:justify-start md:bg-transparent md:p-0'>
-          <Button variant='outline' className='flex-1 md:w-50 md:flex-none'>
-            Add to Cart
+          <Button
+            variant='outline'
+            className='flex-1 md:w-50 md:flex-none'
+            onClick={onAddCart}
+            disabled={isAddingCart || isOutOfStock}
+          >
+            {isAddingCart
+              ? 'Adding...'
+              : isOutOfStock
+                ? 'Out of Stock'
+                : 'Add to Cart'}
           </Button>
           <Button
             className='flex-1 md:w-50 md:flex-none'

@@ -5,6 +5,7 @@ import categoriesReducer from '@/features/categories/stores/categories-slice';
 import authorsReducer from '@/features/authors/stores/authors-slice';
 import loansReducer from '@/features/loans/stores/loans-slice';
 import reviewsReducer from '@/features/reviews/stores/reviews-slice';
+import cartReducer from '@/features/cart/stores/cart-slice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     authors: authorsReducer,
     loans: loansReducer,
     reviews: reviewsReducer,
+    cart: cartReducer,
   },
 });
 
