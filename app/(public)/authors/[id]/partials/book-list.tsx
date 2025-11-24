@@ -1,12 +1,15 @@
 import { Section } from '@/components/layouts/section';
 import BookCard from '@/features/books/components/book-card';
 import { AuthorBook } from '@/features/authors/types/author.types';
+import { useAppSelector } from '@/lib/hooks';
 
 interface BookListProps {
   books: AuthorBook[];
 }
 
 const BookList = ({ books }: BookListProps) => {
+  const { currentAuthor } = useAppSelector((state) => state.authors);
+
   if (books.length === 0) {
     return (
       <Section title='Book List' className='gap-4 md:gap-8'>
@@ -21,11 +24,8 @@ const BookList = ({ books }: BookListProps) => {
         {books.map((book) => (
           <BookCard
             key={book.id}
-            book={{
-              ...book,
-              author: { id: book.authorId, name: '' },
-              category: { id: book.categoryId, name: '' },
-            }}
+            book={book}
+            authorName={currentAuthor?.name}
           />
         ))}
       </div>

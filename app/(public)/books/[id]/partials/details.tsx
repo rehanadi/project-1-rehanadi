@@ -1,10 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import Breadcrumbs from './breadcrumbs';
 import BookInfo from '@/features/books/components/book-info';
 import { BookDetail } from '@/features/books/types/book.types';
 import { useAddLoan } from '@/features/loans/hooks';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { setCurrentBook } from '@/features/books/stores/books-slice';
 
 interface DetailsProps {
@@ -14,10 +15,17 @@ interface DetailsProps {
 
 const Details = ({ book, onBorrowSuccess }: DetailsProps) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const { mutate: borrowBook, isPending } = useAddLoan();
 
   const handleBorrow = () => {
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
+
     dispatch(
       setCurrentBook({
         ...book,

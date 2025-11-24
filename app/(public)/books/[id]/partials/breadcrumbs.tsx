@@ -21,8 +21,8 @@ const Breadcrumbs = ({ book }: BreadcrumbsProps) => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href={`/books?categoryId=${book.category.id}`}>
-            {book.category.name}
+          <BreadcrumbLink href={`/books?categoryId=${book.Category.id}`}>
+            {book.Category.name}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />

@@ -64,7 +64,7 @@ const LoanItemCard = ({ loan }: LoanItemCardProps) => {
               <Skeleton className='h-6 w-20' />
             ) : (
               <Badge variant='outline'>
-                {bookData?.data.category.name || 'Category'}
+                {bookData?.data.Category.name || 'Category'}
               </Badge>
             )}
 
@@ -74,7 +74,7 @@ const LoanItemCard = ({ loan }: LoanItemCardProps) => {
               <Skeleton className='h-4 w-32' />
             ) : (
               <p className='md:text-md text-sm font-medium text-neutral-700'>
-                {bookData?.data.author.name || 'Author'}
+                {bookData?.data.Author.name || 'Author'}
               </p>
             )}
 

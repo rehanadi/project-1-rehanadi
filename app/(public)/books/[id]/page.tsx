@@ -91,7 +91,7 @@ const BookPage = () => {
     <BookContainer>
       <Details book={currentBook} onBorrowSuccess={handleBorrowSuccess} />
       <Separator />
-      <Reviews reviews={currentBook.reviews} rating={currentBook.rating} />
+      <Reviews reviews={currentBook.Review} rating={currentBook.rating} />
       <Separator />
       <RelatedBooks books={filteredRelatedBooks} isLoading={isLoadingRelated} />
     </BookContainer>

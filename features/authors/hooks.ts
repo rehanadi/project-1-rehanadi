@@ -33,7 +33,12 @@ export const useGetAuthorBooks = (
     queryKey: ['authorBooks', authorId],
     queryFn: async () => {
       const response = await authorsApi.getAuthorBooks(authorId);
-      dispatch(setAuthorBooks({ authorId, books: response.data.books }));
+      dispatch(
+        setAuthorBooks({
+          authorId,
+          books: response.data.books,
+        })
+      );
       dispatch(setCurrentAuthor(response.data.author));
       return response;
     },

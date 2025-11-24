@@ -43,7 +43,7 @@ const Reviews = ({ reviews, rating }: ReviewsProps) => {
         {reviews.map((review) => (
           <ReviewCard
             key={review.id}
-            name={review.user.name}
+            name={review.User.name}
             image='/images/avatar.png'
             date={dayjs(review.createdAt).format('DD MMMM YYYY, HH:mm')}
             rating={review.star}

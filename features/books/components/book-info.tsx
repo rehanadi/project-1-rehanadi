@@ -26,15 +26,15 @@ const BookInfo = ({ book, onBorrow, isBorrowing = false }: BookInfoProps) => {
       <div className='flex flex-1 flex-col gap-4 md:gap-5'>
         <div className='flex flex-col gap-3 md:gap-5.5'>
           <div className='flex flex-col items-start gap-0.5 md:gap-1'>
-            <Link href={`/books?categoryId=${book.category.id}`}>
-              <Badge variant='outline'>{book.category.name}</Badge>
+            <Link href={`/books?categoryId=${book.Category.id}`}>
+              <Badge variant='outline'>{book.Category.name}</Badge>
             </Link>
             <h1 className='text-display-xs md:text-display-sm font-bold'>
               {book.title}
             </h1>
-            <Link href={`/authors/${book.author.id}`}>
+            <Link href={`/authors/${book.Author.id}`}>
               <p className='text-sm-semibold md:text-md-semibold hover:text-primary-300 text-neutral-700 transition-colors'>
-                {book.author.name}
+                {book.Author.name}
               </p>
             </Link>
             <BookRating rating={book.rating} />

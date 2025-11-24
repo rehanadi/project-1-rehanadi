@@ -1,24 +1,9 @@
 export interface Author {
-  name: string;
-  booksCount: number;
-  image: string;
-  link: string;
-}
-
-export interface AuthorItem {
   id: number;
   name: string;
-  bio: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface GetAuthorsResponse {
-  success: true;
-  message: string;
-  data: {
-    authors: AuthorItem[];
-  };
+  bio?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface AuthorBook {
@@ -28,6 +13,9 @@ export interface AuthorBook {
   isbn: string;
   publishedYear: number;
   coverImage: string | null;
+  price: number;
+  stock: number;
+  isActive: boolean;
   rating: number;
   reviewCount: number;
   totalCopies: number;
@@ -39,17 +27,25 @@ export interface AuthorBook {
   updatedAt: string;
 }
 
+export interface GetAuthorsResponse {
+  success: true;
+  message: string;
+  data: {
+    authors: Author[];
+  };
+}
+
 export interface GetAuthorBooksResponse {
   success: true;
   message: string;
   data: {
-    author: AuthorItem;
+    author: Author;
     books: AuthorBook[];
   };
 }
 
 export interface AuthorsState {
-  authors: AuthorItem[];
+  authors: Author[];
+  currentAuthor: Author | null;
   authorBooks: Record<number, AuthorBook[]>;
-  currentAuthor: AuthorItem | null;
 }

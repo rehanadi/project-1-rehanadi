@@ -1,38 +1,42 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { BookItem } from '../types/book.types';
 import BookRating from './book-rating';
+import { BookItem } from '../types/book.types';
+import { AuthorBook } from '@/features/authors/types/author.types';
 
 interface BookCardProps {
-  book: BookItem;
+  book: BookItem | AuthorBook;
+  authorName?: string;
 }
 
-const BookCard = ({ book }: BookCardProps) => {
+const BookCard = ({ book, authorName }: BookCardProps) => {
   const defaultImage = '/images/book-placeholder.png';
 
+  const displayAuthorName =
+    'Author' in book ? book.Author.name : authorName || 'Unknown Author';
+
   return (
-    <div className='shadow-light overflow-hidden rounded-xl'>
-      <Link href={`/books/${book.id}`}>
-        <div className='group relative aspect-224/336 w-full overflow-hidden'>
-          <Image
-            src={book.coverImage || defaultImage}
-            alt={book.title}
-            fill
-            className='transition group-hover:scale-110'
-          />
-        </div>
-      </Link>
+    <Link
+      href={`/books/${book.id}`}
+      className='shadow-light overflow-hidden rounded-xl transition-all hover:shadow-md'
+    >
+      <div className='relative aspect-224/336 w-full'>
+        <Image
+          src={book.coverImage || defaultImage}
+          alt={book.title}
+          fill
+          className='object-cover'
+        />
+      </div>
 
       <div className='flex flex-col gap-0.5 p-3'>
-        <Link href={`/books/${book.id}`}>
-          <h3 className='text-sm-bold hover:text-primary-300 text-neutral-900 transition-colors'>
-            {book.title}
-          </h3>
-        </Link>
-        <p className='text-sm-medium text-neutral-700'>{book.author.name}</p>
+        <h3 className='text-md-bold line-clamp-1'>{book.title}</h3>
+        <p className='text-sm-medium line-clamp-1 text-neutral-700'>
+          {displayAuthorName}
+        </p>
         <BookRating rating={book.rating} />
       </div>
-    </div>
+    </Link>
   );
 };
 

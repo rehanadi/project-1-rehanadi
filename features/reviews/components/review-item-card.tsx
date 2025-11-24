@@ -39,7 +39,7 @@ const ReviewItemCard = ({ review }: ReviewItemCardProps) => {
             <Skeleton className='h-6 w-20' />
           ) : (
             <Badge variant='outline'>
-              {bookData?.data.category.name || 'Category'}
+              {bookData?.data.Category.name || 'Category'}
             </Badge>
           )}
           <h3 className='text-md-bold md:text-lg-bold'>{review.book.title}</h3>
@@ -47,7 +47,7 @@ const ReviewItemCard = ({ review }: ReviewItemCardProps) => {
             <Skeleton className='h-4 w-32' />
           ) : (
             <p className='text-sm-medium md:text-md-medium text-neutral-700'>
-              {bookData?.data.author.name || 'Author'}
+              {bookData?.data.Author.name || 'Author'}
             </p>
           )}
         </div>

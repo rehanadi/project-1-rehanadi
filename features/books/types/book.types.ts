@@ -13,6 +13,9 @@ export interface BookItem {
   isbn: string;
   publishedYear: number;
   coverImage: string | null;
+  price: number;
+  stock: number;
+  isActive: boolean;
   rating: number;
   reviewCount: number;
   totalCopies: number;
@@ -22,14 +25,14 @@ export interface BookItem {
   categoryId: number;
   createdAt: string;
   updatedAt: string;
-  author: {
+  Author: {
     id: number;
     name: string;
     bio?: string;
     createdAt?: string;
     updatedAt?: string;
   };
-  category: {
+  Category: {
     id: number;
     name: string;
     createdAt?: string;
@@ -44,14 +47,14 @@ export interface Review {
   userId: number;
   bookId: number;
   createdAt: string;
-  user: {
+  User: {
     id: number;
     name: string;
   };
 }
 
 export interface BookDetail extends BookItem {
-  reviews: Review[];
+  Review: Review[];
 }
 
 export interface GetBookResponse {

@@ -1,21 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthorsState, AuthorItem, AuthorBook } from '../types/author.types';
+import { AuthorsState, Author, AuthorBook } from '../types/author.types';
 
 const initialState: AuthorsState = {
   authors: [],
-  authorBooks: {},
   currentAuthor: null,
+  authorBooks: {},
 };
 
 const authorsSlice = createSlice({
   name: 'authors',
   initialState,
   reducers: {
-    setAuthors: (state, action: PayloadAction<AuthorItem[]>) => {
+    setAuthors: (state, action: PayloadAction<Author[]>) => {
       state.authors = action.payload;
-    },
-    clearAuthors: (state) => {
-      state.authors = [];
     },
     setAuthorBooks: (
       state,
@@ -23,20 +20,24 @@ const authorsSlice = createSlice({
     ) => {
       state.authorBooks[action.payload.authorId] = action.payload.books;
     },
-    setCurrentAuthor: (state, action: PayloadAction<AuthorItem>) => {
+    setCurrentAuthor: (state, action: PayloadAction<Author>) => {
       state.currentAuthor = action.payload;
     },
-    clearCurrentAuthor: (state) => {
+    clearAuthors: (state) => {
+      state.authors = [];
+    },
+    clearAuthorBooks: (state) => {
       state.currentAuthor = null;
+      state.authorBooks = {};
     },
   },
 });
 
 export const {
   setAuthors,
-  clearAuthors,
   setAuthorBooks,
   setCurrentAuthor,
-  clearCurrentAuthor,
+  clearAuthors,
+  clearAuthorBooks,
 } = authorsSlice.actions;
 export default authorsSlice.reducer;
