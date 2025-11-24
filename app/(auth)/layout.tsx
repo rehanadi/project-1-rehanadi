@@ -5,14 +5,18 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const router = useRouter();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/');
+    if (isAuthenticated && user) {
+      if (user.role === 'ADMIN') {
+        router.push('/admin/users');
+      } else {
+        router.push('/');
+      }
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, user, router]);
 
   if (isAuthenticated) {
     return null;

@@ -1,4 +1,8 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAppSelector } from '@/lib/hooks';
 import Header from '@/features/shared/components/admin/header';
 
 interface AdminLayoutProps {
@@ -6,6 +10,21 @@ interface AdminLayoutProps {
 }
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login');
+    } else if (user?.role === 'USER') {
+      router.push('/');
+    }
+  }, [isAuthenticated, user, router]);
+
+  if (!isAuthenticated || user?.role !== 'ADMIN') {
+    return null;
+  }
+
   return (
     <>
       <Header />

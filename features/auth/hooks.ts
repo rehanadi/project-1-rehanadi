@@ -41,7 +41,12 @@ export const useLogin = () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
 
       toast.success('Login successful!');
-      router.push('/');
+
+      if (data.data.user.role === 'ADMIN') {
+        router.push('/admin/users');
+      } else {
+        router.push('/');
+      }
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));
