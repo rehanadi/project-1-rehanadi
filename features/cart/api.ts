@@ -3,6 +3,7 @@ import {
   AddCartPayload,
   AddCartResponse,
   GetMyCartResponse,
+  RemoveCartItemResponse,
 } from './types/cart.types';
 
 export const cartApi = {
@@ -12,5 +13,9 @@ export const cartApi = {
 
   addCart: async (payload: AddCartPayload): Promise<AddCartResponse> => {
     return http.post<AddCartResponse>('/api/cart/items', payload);
+  },
+
+  removeCartItem: async (itemId: number): Promise<RemoveCartItemResponse> => {
+    return http.delete<RemoveCartItemResponse>(`/api/cart/items/${itemId}`);
   },
 };

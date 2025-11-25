@@ -6,6 +6,7 @@ import authorsReducer from '@/features/authors/stores/authors-slice';
 import loansReducer from '@/features/loans/stores/loans-slice';
 import reviewsReducer from '@/features/reviews/stores/reviews-slice';
 import cartReducer from '@/features/cart/stores/cart-slice';
+import usersReducer from '@/features/users/stores/users-slice';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     loans: loansReducer,
     reviews: reviewsReducer,
     cart: cartReducer,
+    users: usersReducer,
   },
 });
 

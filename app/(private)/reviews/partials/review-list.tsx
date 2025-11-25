@@ -30,7 +30,7 @@ const ReviewList = ({
     return reviews.filter(
       (review) =>
         review.comment.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        review.book.title.toLowerCase().includes(searchQuery.toLowerCase())
+        review.Book.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [reviews, searchQuery]);
 

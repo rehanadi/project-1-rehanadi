@@ -13,7 +13,7 @@ export interface MyReview {
   userId: number;
   bookId: number;
   createdAt: string;
-  book: {
+  Book: {
     id: number;
     title: string;
     coverImage: string | null;

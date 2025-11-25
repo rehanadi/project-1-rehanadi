@@ -28,8 +28,8 @@ const ReviewItemCard = ({ review }: ReviewItemCardProps) => {
       <div className='flex items-center justify-start gap-3 md:gap-4'>
         <div className='relative h-[106px] w-[70px] md:h-[138px] md:w-[92px]'>
           <Image
-            src={review.book.coverImage || defaultImage}
-            alt={review.book.title}
+            src={review.Book.coverImage || defaultImage}
+            alt={review.Book.title}
             fill
           />
         </div>
@@ -42,7 +42,7 @@ const ReviewItemCard = ({ review }: ReviewItemCardProps) => {
               {bookData?.data.Category.name || 'Category'}
             </Badge>
           )}
-          <h3 className='text-md-bold md:text-lg-bold'>{review.book.title}</h3>
+          <h3 className='text-md-bold md:text-lg-bold'>{review.Book.title}</h3>
           {isLoadingBook ? (
             <Skeleton className='h-4 w-32' />
           ) : (

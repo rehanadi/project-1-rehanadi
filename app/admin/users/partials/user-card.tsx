@@ -1,16 +1,17 @@
-import { User } from '@/features/users/types/user.types';
 import UserField from './user-field';
 import { Field } from '@/features/shared/types/field.types';
 
-const UserCard = ({
-  no,
-  name,
-  email,
-  phone,
-  createdAt,
-}: User & { no: number }) => {
+interface UserCardProps {
+  no: string;
+  name: string;
+  email: string;
+  phone: string;
+  createdAt: string;
+}
+
+const UserCard = ({ no, name, email, phone, createdAt }: UserCardProps) => {
   const userFields: Field[] = [
-    { label: 'No', value: no.toString() },
+    { label: 'No', value: no },
     { label: 'Name', value: name },
     { label: 'Email', value: email },
     { label: 'Nomor Handphone', value: phone },
