@@ -1,8 +1,8 @@
 import AuthorCard from '@/features/authors/components/author-card';
-import { AuthorItem } from '@/features/authors/types/author.types';
+import { Author } from '@/features/authors/types/author.types';
 
 interface AuthorInfoProps {
-  author: AuthorItem;
+  author: Author;
   booksCount: number;
 }
 

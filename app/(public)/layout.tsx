@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/lib/hooks';
-import Header from '@/features/shared/components/header';
+import HeaderWrapper from '@/features/shared/components/header-wrapper';
 import Footer from '@/features/shared/components/footer';
 
 interface PublicLayoutProps {
@@ -37,7 +37,7 @@ const PublicLayout = ({ children }: PublicLayoutProps) => {
 
   return (
     <>
-      <Header />
+      <HeaderWrapper />
       <main>{children}</main>
       <Footer />
     </>
