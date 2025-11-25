@@ -18,7 +18,7 @@ export const useGetBooks = (
   const dispatch = useAppDispatch();
 
   return useQuery({
-    queryKey: ['books', params.page, params.limit],
+    queryKey: ['books', params.page, params.limit, params.q],
     queryFn: async () => {
       const response = await booksApi.getBooks(params);
 
@@ -31,7 +31,7 @@ export const useGetBooks = (
       return response;
     },
     retry: 1,
-    staleTime: 1000 * 60,
+    staleTime: 0,
     gcTime: 1000 * 60,
   });
 };
