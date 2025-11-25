@@ -8,6 +8,7 @@ import DurationRadio from './duration-radio';
 import AcceptmentCheckbox from './acceptment-checkbox';
 import dayjs from 'dayjs';
 import { useAddLoan } from '@/features/loans/hooks';
+import { useRemoveCartItem } from '@/features/cart/hooks';
 import { useAppSelector } from '@/lib/hooks';
 import { toast } from 'react-toastify';
 
@@ -21,7 +22,8 @@ const CheckoutForm = ({ onSuccess }: CheckoutFormProps) => {
   const [acceptPolicy, setAcceptPolicy] = useState(false);
 
   const { items, selectedItems } = useAppSelector((state) => state.cart);
-  const { mutateAsync: addLoan, isPending } = useAddLoan();
+  const { mutateAsync: addLoan, isPending: isAddingLoan } = useAddLoan();
+  const { mutateAsync: removeCartItem } = useRemoveCartItem();
 
   const borrowDate = dayjs().format('DD MMM YYYY');
 
@@ -40,14 +42,22 @@ const CheckoutForm = ({ onSuccess }: CheckoutFormProps) => {
     }
 
     try {
-      const promises = selectedBooks.map((item) =>
+      // Add loans for all selected books
+      const loanPromises = selectedBooks.map((item) =>
         addLoan({
           bookId: item.bookId,
           days: Number(duration),
         })
       );
 
-      await Promise.all(promises);
+      await Promise.all(loanPromises);
+
+      // Remove cart items after successful loans
+      const removePromises = selectedBooks.map((item) =>
+        removeCartItem(item.id)
+      );
+
+      await Promise.all(removePromises);
 
       const finalReturnDate = dayjs()
         .add(Number(duration), 'day')
@@ -114,10 +124,10 @@ const CheckoutForm = ({ onSuccess }: CheckoutFormProps) => {
 
       <Button
         className='w-full'
-        disabled={!canSubmit || isPending}
+        disabled={!canSubmit || isAddingLoan}
         onClick={handleSubmit}
       >
-        {isPending ? 'Processing...' : 'Confirm & Borrow'}
+        {isAddingLoan ? 'Processing...' : 'Confirm & Borrow'}
       </Button>
     </div>
   );

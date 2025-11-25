@@ -40,6 +40,17 @@ const cartSlice = createSlice({
         item.categoryName = action.payload.categoryName;
       }
     },
+    removeCartItemFromState: (state, action: PayloadAction<number>) => {
+      const itemId = action.payload;
+      state.items = state.items.filter((item) => item.id !== itemId);
+      state.selectedItems = state.selectedItems.filter((id) => id !== itemId);
+
+      // Recalculate grand total
+      state.grandTotal = state.items.reduce(
+        (total, item) => total + item.subtotal,
+        0
+      );
+    },
     toggleSelectItem: (state, action: PayloadAction<number>) => {
       const itemId = action.payload;
       const index = state.selectedItems.indexOf(itemId);
@@ -68,6 +79,7 @@ const cartSlice = createSlice({
 export const {
   setCart,
   updateCartItemDetails,
+  removeCartItemFromState,
   toggleSelectItem,
   selectAllItems,
   clearSelectedItems,

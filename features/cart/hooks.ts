@@ -5,7 +5,7 @@ import { cartApi } from './api';
 import { AddCartPayload } from './types/cart.types';
 import { getErrorMessage } from '@/lib/api';
 import { useAppDispatch } from '@/lib/hooks';
-import { setCart } from './stores/cart-slice';
+import { setCart, removeCartItemFromState } from './stores/cart-slice';
 
 export const useGetMyCart = () => {
   const dispatch = useAppDispatch();
@@ -34,6 +34,23 @@ export const useAddCart = () => {
       queryClient.invalidateQueries({ queryKey: ['book'] });
       toast.success('Book added to cart!');
       router.push('/cart');
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
+    },
+  });
+};
+
+export const useRemoveCartItem = () => {
+  const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (itemId: number) => cartApi.removeCartItem(itemId),
+    onSuccess: (_, itemId) => {
+      dispatch(removeCartItemFromState(itemId));
+      queryClient.invalidateQueries({ queryKey: ['myCart'] });
+      queryClient.invalidateQueries({ queryKey: ['book'] });
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));

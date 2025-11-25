@@ -48,6 +48,20 @@ export interface AddCartResponse {
   };
 }
 
+export interface RemoveCartItemResponse {
+  success: true;
+  message: string;
+  data: {
+    id: number;
+    cartId: number;
+    bookId: number;
+    qty: number;
+    priceSnapshot: number;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+
 export interface CartState {
   cartId: number | null;
   items: CartItem[];
