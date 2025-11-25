@@ -1,20 +1,44 @@
+'use client';
+
 import BookInfo from '@/features/books/components/book-info';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { useGetBook } from '@/features/books/hooks';
+import { useParams } from 'next/navigation';
+import PreviewBookTitle from './partials/preview-book-title';
+import PreviewBookContainer from './partials/preview-book-container';
 
 const PreviewBookPage = () => {
+  const params = useParams();
+  const bookId = Number(params.id);
+
+  const { data, isLoading } = useGetBook(bookId);
+
+  if (isLoading) {
+    return (
+      <PreviewBookContainer>
+        <PreviewBookTitle />
+        <div className='flex items-center justify-center py-20'>
+          <p className='text-neutral-600'>Loading...</p>
+        </div>
+      </PreviewBookContainer>
+    );
+  }
+
+  if (!data?.data) {
+    return (
+      <PreviewBookContainer>
+        <PreviewBookTitle />
+        <div className='flex items-center justify-center py-20'>
+          <p className='text-neutral-600'>Book not found</p>
+        </div>
+      </PreviewBookContainer>
+    );
+  }
+
   return (
-    <div className='flex flex-col gap-9 md:gap-8'>
-      <div className='flex-start gap-1.5 md:gap-3'>
-        <Link href='/admin/books'>
-          <ArrowLeft className='size-6 md:size-8' />
-        </Link>
-
-        <h1 className='md:text-display-sm text-xl font-bold'>Preview Book</h1>
-      </div>
-
-      <BookInfo />
-    </div>
+    <PreviewBookContainer>
+      <PreviewBookTitle />
+      <BookInfo book={data.data} />
+    </PreviewBookContainer>
   );
 };
 
