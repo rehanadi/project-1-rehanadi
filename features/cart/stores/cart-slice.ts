@@ -3,6 +3,7 @@ import { CartState, CartItem } from '../types/cart.types';
 
 const CART_STORAGE_KEY = 'cart';
 
+// Load initial state from localStorage
 const loadCartFromStorage = (): CartState => {
   if (typeof window === 'undefined') {
     return {
@@ -30,6 +31,7 @@ const loadCartFromStorage = (): CartState => {
   };
 };
 
+// Save state to localStorage
 const saveCartToStorage = (state: CartState) => {
   if (typeof window === 'undefined') return;
 
@@ -57,6 +59,13 @@ const cartSlice = createSlice({
       state.cartId = action.payload.cartId;
       state.items = action.payload.items;
       state.grandTotal = action.payload.grandTotal;
+
+      // Clean up selectedItems - remove IDs that no longer exist in items
+      const validItemIds = action.payload.items.map((item) => item.id);
+      state.selectedItems = state.selectedItems.filter((id) =>
+        validItemIds.includes(id)
+      );
+
       saveCartToStorage(state);
     },
     updateCartItemDetails: (

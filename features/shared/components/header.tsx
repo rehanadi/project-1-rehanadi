@@ -11,7 +11,6 @@ import { useAppSelector } from '@/lib/hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'react-use';
-import { useGetMyCart } from '@/features/cart/hooks';
 
 const Header = () => {
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
@@ -19,11 +18,13 @@ const Header = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
-
-  // Fetch cart if authenticated and cart is empty
-  useGetMyCart();
+  const [isHydrated, setIsHydrated] = useState(false);
 
   const totalCartItems = items.length;
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useDebounce(
     () => {
@@ -48,6 +49,18 @@ const Header = () => {
       setSearchValue(currentQuery || '');
     }
   }, [searchParams]);
+
+  if (!isHydrated) {
+    return (
+      <header className='shadow-light sticky inset-x-0 top-0 z-50 h-16 w-full gap-4 bg-white md:h-20'>
+        <div className='custom-container flex-between h-full'>
+          <Link href='/'>
+            <ResponsiveLogo />
+          </Link>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className='shadow-light sticky inset-x-0 top-0 z-50 h-16 w-full gap-4 bg-white md:h-20'>

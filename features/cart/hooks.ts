@@ -7,9 +7,8 @@ import { getErrorMessage } from '@/lib/api';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { setCart, removeCartItemFromState } from './stores/cart-slice';
 
-export const useGetMyCart = () => {
+export const useGetMyCart = (enabled: boolean = true) => {
   const dispatch = useAppDispatch();
-  const { items } = useAppSelector((state) => state.cart);
 
   return useQuery({
     queryKey: ['myCart'],
@@ -19,23 +18,31 @@ export const useGetMyCart = () => {
       return response;
     },
     retry: 1,
-    staleTime: 1000 * 60,
+    staleTime: 0, // Always consider data stale
     gcTime: 1000 * 60,
-    enabled: items.length === 0,
+    enabled,
   });
 };
 
-export const useAddCart = () => {
+export const useAddCart = (shouldRedirect: boolean = true) => {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const dispatch = useAppDispatch();
 
   return useMutation({
     mutationFn: (payload: AddCartPayload) => cartApi.addCart(payload),
-    onSuccess: () => {
+    onSuccess: async () => {
+      // Refetch cart to get updated data
+      const response = await cartApi.getMyCart();
+      dispatch(setCart(response.data));
+
       queryClient.invalidateQueries({ queryKey: ['myCart'] });
       queryClient.invalidateQueries({ queryKey: ['book'] });
       toast.success('Book added to cart!');
-      router.push('/cart');
+
+      if (shouldRedirect) {
+        router.push('/cart');
+      }
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));

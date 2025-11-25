@@ -1,11 +1,39 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, User } from '../types/auth.types';
 
-const initialState: AuthState = {
-  token: null,
-  user: null,
-  isAuthenticated: false,
+// Load initial state from localStorage
+const loadAuthFromStorage = (): AuthState => {
+  if (typeof window === 'undefined') {
+    return {
+      token: null,
+      user: null,
+      isAuthenticated: false,
+    };
+  }
+
+  try {
+    const token = localStorage.getItem('token');
+    const userStr = localStorage.getItem('user');
+
+    if (token && userStr) {
+      return {
+        token,
+        user: JSON.parse(userStr),
+        isAuthenticated: true,
+      };
+    }
+  } catch (error) {
+    console.error('Failed to load auth from localStorage:', error);
+  }
+
+  return {
+    token: null,
+    user: null,
+    isAuthenticated: false,
+  };
 };
+
+const initialState: AuthState = loadAuthFromStorage();
 
 const authSlice = createSlice({
   name: 'auth',
@@ -39,6 +67,7 @@ const authSlice = createSlice({
       if (typeof window !== 'undefined') {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        localStorage.removeItem('cart');
       }
     },
     restoreAuth: (state) => {
