@@ -1,12 +1,46 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartState, CartItem } from '../types/cart.types';
 
-const initialState: CartState = {
-  cartId: null,
-  items: [],
-  grandTotal: 0,
-  selectedItems: [],
+const CART_STORAGE_KEY = 'cart';
+
+const loadCartFromStorage = (): CartState => {
+  if (typeof window === 'undefined') {
+    return {
+      cartId: null,
+      items: [],
+      grandTotal: 0,
+      selectedItems: [],
+    };
+  }
+
+  try {
+    const storedCart = localStorage.getItem(CART_STORAGE_KEY);
+    if (storedCart) {
+      return JSON.parse(storedCart);
+    }
+  } catch (error) {
+    console.error('Failed to load cart from localStorage:', error);
+  }
+
+  return {
+    cartId: null,
+    items: [],
+    grandTotal: 0,
+    selectedItems: [],
+  };
 };
+
+const saveCartToStorage = (state: CartState) => {
+  if (typeof window === 'undefined') return;
+
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(state));
+  } catch (error) {
+    console.error('Failed to save cart to localStorage:', error);
+  }
+};
+
+const initialState: CartState = loadCartFromStorage();
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -23,6 +57,7 @@ const cartSlice = createSlice({
       state.cartId = action.payload.cartId;
       state.items = action.payload.items;
       state.grandTotal = action.payload.grandTotal;
+      saveCartToStorage(state);
     },
     updateCartItemDetails: (
       state,
@@ -39,6 +74,7 @@ const cartSlice = createSlice({
         item.authorName = action.payload.authorName;
         item.categoryName = action.payload.categoryName;
       }
+      saveCartToStorage(state);
     },
     removeCartItemFromState: (state, action: PayloadAction<number>) => {
       const itemId = action.payload;
@@ -50,6 +86,7 @@ const cartSlice = createSlice({
         (total, item) => total + item.subtotal,
         0
       );
+      saveCartToStorage(state);
     },
     toggleSelectItem: (state, action: PayloadAction<number>) => {
       const itemId = action.payload;
@@ -60,18 +97,22 @@ const cartSlice = createSlice({
       } else {
         state.selectedItems.push(itemId);
       }
+      saveCartToStorage(state);
     },
     selectAllItems: (state) => {
       state.selectedItems = state.items.map((item) => item.id);
+      saveCartToStorage(state);
     },
     clearSelectedItems: (state) => {
       state.selectedItems = [];
+      saveCartToStorage(state);
     },
     clearCart: (state) => {
       state.cartId = null;
       state.items = [];
       state.grandTotal = 0;
       state.selectedItems = [];
+      saveCartToStorage(state);
     },
   },
 });

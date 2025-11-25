@@ -20,6 +20,7 @@ const Header = () => {
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
 
+  // Fetch cart if authenticated and cart is empty
   useGetMyCart();
 
   const totalCartItems = items.length;

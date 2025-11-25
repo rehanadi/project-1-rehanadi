@@ -4,11 +4,12 @@ import { toast } from 'react-toastify';
 import { cartApi } from './api';
 import { AddCartPayload } from './types/cart.types';
 import { getErrorMessage } from '@/lib/api';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { setCart, removeCartItemFromState } from './stores/cart-slice';
 
 export const useGetMyCart = () => {
   const dispatch = useAppDispatch();
+  const { items } = useAppSelector((state) => state.cart);
 
   return useQuery({
     queryKey: ['myCart'],
@@ -20,6 +21,7 @@ export const useGetMyCart = () => {
     retry: 1,
     staleTime: 1000 * 60,
     gcTime: 1000 * 60,
+    enabled: items.length === 0,
   });
 };
 
