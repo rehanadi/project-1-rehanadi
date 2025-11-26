@@ -14,14 +14,14 @@ const Footer = () => {
             <Logo />
           </Link>
 
-          <p className='text-sm-semibold md:text-md-semibold'>
+          <p className='text-sm-semibold md:text-md-semibold text-center'>
             Discover inspiring stories & timeless knowledge, ready to borrow
             anytime. Explore online or visit our nearest library branch.
           </p>
         </div>
 
         <div className='flex flex-col gap-5'>
-          <h3 className='text-md-bold'>Follow on Social Media</h3>
+          <h3 className='text-md-bold text-center'>Follow on Social Media</h3>
           <div className='flex-center gap-3'>
             {socialMediaData.map((socialMedia, index) => (
               <SocialMediaIcon key={index} {...socialMedia} />

@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { logout } from '@/features/auth/stores/auth-slice';
+import { motion, AnimatePresence } from 'motion/react';
 
 const Header = () => {
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
@@ -184,20 +185,30 @@ const Header = () => {
           <>
             <AuthButtons className='hidden md:grid' />
 
-            {showMenu ? (
-              <>
-                <X
+            <AnimatePresence>
+              {showMenu ? (
+                <>
+                  <X
+                    className='block size-6 cursor-pointer md:hidden'
+                    onClick={() => setShowMenu(false)}
+                  />
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className='absolute inset-x-0 top-16 z-60'
+                  >
+                    <AuthButtons className='grid w-full justify-between bg-white p-4 md:hidden' />
+                  </motion.div>
+                </>
+              ) : (
+                <Menu
                   className='block size-6 cursor-pointer md:hidden'
-                  onClick={() => setShowMenu(false)}
+                  onClick={() => setShowMenu(true)}
                 />
-                <AuthButtons className='absolute inset-x-0 top-16 z-60 grid w-full justify-between bg-white p-4 md:hidden' />
-              </>
-            ) : (
-              <Menu
-                className='block size-6 cursor-pointer md:hidden'
-                onClick={() => setShowMenu(true)}
-              />
-            )}
+              )}
+            </AnimatePresence>
           </>
         )}
       </div>
