@@ -33,11 +33,9 @@ const Details = ({ book }: DetailsProps) => {
       return;
     }
 
-    // Check if book already in cart
     const existingItem = items.find((item) => item.bookId === book.id);
 
     if (existingItem) {
-      // Update author and category if not present
       if (!existingItem.authorName || !existingItem.categoryName) {
         dispatch(
           updateCartItemDetails({
@@ -48,7 +46,6 @@ const Details = ({ book }: DetailsProps) => {
         );
       }
 
-      // Clear all selections and select only this item
       dispatch(clearSelectedItems());
       dispatch(toggleSelectItem(existingItem.id));
       router.push('/checkout');
@@ -61,13 +58,10 @@ const Details = ({ book }: DetailsProps) => {
         })
       );
 
-      // Add to cart and redirect to checkout
       addCartForBorrow(
         { bookId: book.id, qty: 1 },
         {
           onSuccess: (data) => {
-            // Redux state already updated in useAddCart hook
-            // Update author and category details
             dispatch(
               updateCartItemDetails({
                 bookId: book.id,
@@ -76,13 +70,11 @@ const Details = ({ book }: DetailsProps) => {
               })
             );
 
-            // Clear all selections and select only this new item
             dispatch(clearSelectedItems());
             dispatch(toggleSelectItem(data.data.id));
             router.push('/checkout');
           },
           onError: () => {
-            // Rollback on error
             dispatch(setCurrentBook(book));
           },
         }
@@ -108,7 +100,6 @@ const Details = ({ book }: DetailsProps) => {
       { bookId: book.id, qty: 1 },
       {
         onSuccess: () => {
-          // Update author and category details after add to cart
           dispatch(
             updateCartItemDetails({
               bookId: book.id,
@@ -118,7 +109,6 @@ const Details = ({ book }: DetailsProps) => {
           );
         },
         onError: () => {
-          // Rollback on error
           dispatch(setCurrentBook(book));
         },
       }

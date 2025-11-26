@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, User } from '../types/auth.types';
 
-// Load initial state from localStorage
 const loadAuthFromStorage = (): AuthState => {
   if (typeof window === 'undefined') {
     return {
