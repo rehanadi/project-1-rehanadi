@@ -119,25 +119,31 @@ const Header = () => {
                       </span>
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <ul className='flex flex-col gap-4 p-4 md:w-[200px]'>
+                      <ul className='flex w-full flex-col gap-4 p-4 md:w-[200px]'>
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link href='/profile'>Profile</Link>
+                            <Link href='/profile' className='block'>
+                              Profile
+                            </Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link href='/loans'>Borrowed List</Link>
+                            <Link href='/loans' className='block'>
+                              Borrowed List
+                            </Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link href='/reviews'>Reviews</Link>
+                            <Link href='/reviews' className='block'>
+                              Reviews
+                            </Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <Link href='#' className='text-danger-500'>
+                            <Link href='#' className='text-danger-500 block'>
                               Logout
                             </Link>
                           </NavigationMenuLink>
