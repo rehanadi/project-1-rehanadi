@@ -9,7 +9,6 @@ const CartPage = () => {
   const { refetch } = useGetMyCart(true);
 
   useEffect(() => {
-    // Always refetch when accessing cart page
     refetch();
   }, [refetch]);
 

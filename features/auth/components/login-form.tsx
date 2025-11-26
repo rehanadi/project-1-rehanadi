@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLogin } from '../hooks';
 import { loginSchema, LoginFormData } from '../schemas';
+import { useGetMyCart } from '@/features/cart/hooks';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,9 +25,14 @@ const LoginForm = () => {
   });
 
   const { mutate: loginUser, isPending } = useLogin();
+  const { refetch: refetchCart } = useGetMyCart(false);
 
-  const onSubmit = (data: LoginFormData) => {
-    loginUser(data);
+  const onSubmit = async (data: LoginFormData) => {
+    loginUser(data, {
+      onSuccess: async () => {
+        await refetchCart();
+      },
+    });
   };
 
   return (

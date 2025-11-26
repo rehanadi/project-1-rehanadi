@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { cartApi } from './api';
 import { AddCartPayload } from './types/cart.types';
 import { getErrorMessage } from '@/lib/api';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { useAppDispatch } from '@/lib/hooks';
 import { setCart, removeCartItemFromState } from './stores/cart-slice';
 
 export const useGetMyCart = (enabled: boolean = true) => {
@@ -18,7 +18,7 @@ export const useGetMyCart = (enabled: boolean = true) => {
       return response;
     },
     retry: 1,
-    staleTime: 0, // Always consider data stale
+    staleTime: 0,
     gcTime: 1000 * 60,
     enabled,
   });
