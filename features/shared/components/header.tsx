@@ -11,6 +11,14 @@ import { useAppSelector } from '@/lib/hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'react-use';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@/components/ui/navigation-menu';
 
 const Header = () => {
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
@@ -95,18 +103,50 @@ const Header = () => {
                 )}
               </Link>
 
-              <div className='flex-center cursor-pointer gap-4'>
-                <Avatar className='size-10 md:size-12'>
-                  <AvatarImage src='/images/avatar.png' />
-                  <AvatarFallback>{user?.name?.[0] || 'U'}</AvatarFallback>
-                </Avatar>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className='flex-center gap-4 bg-transparent p-0 hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent'>
+                      <Avatar className='size-10 md:size-12'>
+                        <AvatarImage src='/images/avatar.png' />
+                        <AvatarFallback>
+                          {user?.name?.[0] || 'U'}
+                        </AvatarFallback>
+                      </Avatar>
 
-                <span className='text-lg-semibold hidden md:block'>
-                  {user?.name || 'User'}
-                </span>
-
-                <ChevronDown className='hidden size-6 cursor-pointer md:block' />
-              </div>
+                      <span className='text-lg-semibold hidden md:block'>
+                        {user?.name || 'User'}
+                      </span>
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className='flex flex-col gap-4 p-4 md:w-[200px]'>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href='/profile'>Profile</Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href='/loans'>Borrowed List</Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href='/reviews'>Reviews</Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href='#' className='text-danger-500'>
+                              Logout
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             </div>
           </>
         ) : (
