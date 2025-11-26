@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronDown, Search } from 'lucide-react';
+import { Menu, Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
@@ -19,6 +19,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
+import { cn } from '@/lib/utils';
 
 const Header = () => {
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
@@ -27,6 +28,7 @@ const Header = () => {
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
   const [isHydrated, setIsHydrated] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const totalCartItems = items.length;
 
@@ -156,15 +158,24 @@ const Header = () => {
             </div>
           </>
         ) : (
-          <div className='flex-center gap-4'>
-            <Button variant='outline' className='w-[163px]' asChild>
-              <Link href='/login'>Login</Link>
-            </Button>
+          <>
+            <AuthButtons className='hidden md:grid' />
 
-            <Button className='w-[163px]' asChild>
-              <Link href='/register'>Register</Link>
-            </Button>
-          </div>
+            {showMenu ? (
+              <>
+                <X
+                  className='block size-6 cursor-pointer md:hidden'
+                  onClick={() => setShowMenu(false)}
+                />
+                <AuthButtons className='absolute inset-x-0 top-16 z-60 grid w-full justify-between bg-white p-4 md:hidden' />
+              </>
+            ) : (
+              <Menu
+                className='block size-6 cursor-pointer md:hidden'
+                onClick={() => setShowMenu(true)}
+              />
+            )}
+          </>
         )}
       </div>
     </header>
@@ -172,3 +183,19 @@ const Header = () => {
 };
 
 export default Header;
+
+const AuthButtons = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn('grid-cols-2 items-center justify-center gap-4', className)}
+    >
+      <Button variant='outline' className='w-full md:w-[163px]' asChild>
+        <Link href='/login'>Login</Link>
+      </Button>
+
+      <Button className='w-full md:w-[163px]' asChild>
+        <Link href='/register'>Register</Link>
+      </Button>
+    </div>
+  );
+};
