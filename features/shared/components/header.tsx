@@ -31,6 +31,7 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
   const [isHydrated, setIsHydrated] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   const totalCartItems = items.length;
 
@@ -81,89 +82,103 @@ const Header = () => {
 
   return (
     <header className='shadow-light sticky inset-x-0 top-0 z-50 h-16 w-full gap-4 bg-white md:h-20'>
-      <div className='custom-container flex-between h-full'>
+      <div className='custom-container flex-between h-full gap-4'>
         <Link href='/'>
           <ResponsiveLogo />
         </Link>
 
         {isAuthenticated ? (
           <>
-            <div className='hidden h-11 w-[500px] items-center gap-1 rounded-full border border-neutral-300 px-4 md:flex md:gap-1.5'>
-              <Search className='size-5 shrink-0 text-neutral-600' />
+            <SearchBox
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              className='hidden md:flex'
+            />
 
-              <Input
-                type='text'
-                placeholder='Search book'
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                className='flex-1 border-0 outline-none'
-              />
-            </div>
+            {showSearch ? (
+              <div className='flex w-full items-center justify-between gap-4 md:hidden'>
+                <SearchBox
+                  searchValue={searchValue}
+                  setSearchValue={setSearchValue}
+                  className='flex flex-1'
+                />
+                <X
+                  className='size-6 cursor-pointer'
+                  onClick={() => setShowSearch(false)}
+                />
+              </div>
+            ) : (
+              <div className='flex-center gap-6'>
+                <Search
+                  className='block size-6 shrink-0 cursor-pointer md:hidden'
+                  onClick={() => setShowSearch(true)}
+                />
 
-            <div className='flex-center gap-6'>
-              <Search className='block size-6 shrink-0 md:hidden' />
+                <Link href='/cart' className='relative'>
+                  <Icon
+                    icon='lets-icons:bag-fill'
+                    className='size-7 md:size-8'
+                  />
+                  {totalCartItems > 0 && (
+                    <div className='bg-danger-500 flex-center text-xs-bold absolute -top-1 -right-1 size-5 rounded-full text-white'>
+                      {totalCartItems}
+                    </div>
+                  )}
+                </Link>
 
-              <Link href='/cart' className='relative'>
-                <Icon icon='lets-icons:bag-fill' className='size-7 md:size-8' />
-                {totalCartItems > 0 && (
-                  <div className='bg-danger-500 flex-center text-xs-bold absolute -top-1 -right-1 size-5 rounded-full text-white'>
-                    {totalCartItems}
-                  </div>
-                )}
-              </Link>
+                <NavigationMenu>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      <NavigationMenuTrigger className='flex-center gap-4 bg-transparent p-0 hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent'>
+                        <Avatar className='size-10 md:size-12'>
+                          <AvatarImage src='/images/avatar.png' />
+                          <AvatarFallback>
+                            {user?.name?.[0] || 'U'}
+                          </AvatarFallback>
+                        </Avatar>
 
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className='flex-center gap-4 bg-transparent p-0 hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent'>
-                      <Avatar className='size-10 md:size-12'>
-                        <AvatarImage src='/images/avatar.png' />
-                        <AvatarFallback>
-                          {user?.name?.[0] || 'U'}
-                        </AvatarFallback>
-                      </Avatar>
-
-                      <span className='text-lg-semibold hidden md:block'>
-                        {user?.name || 'User'}
-                      </span>
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className='flex w-full flex-col gap-4 p-4 md:w-[200px]'>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href='/profile' className='block'>
-                              Profile
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href='/loans' className='block'>
-                              Borrowed List
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href='/reviews' className='block'>
-                              Reviews
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <button
-                            onClick={handleLogout}
-                            className='text-danger-500 md:text-md block w-full cursor-pointer text-left text-sm font-semibold'
-                          >
-                            Logout
-                          </button>
-                        </li>
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
+                        <span className='text-lg-semibold hidden md:block'>
+                          {user?.name || 'User'}
+                        </span>
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <ul className='flex w-full flex-col gap-4 p-4 md:w-[200px]'>
+                          <li>
+                            <NavigationMenuLink asChild>
+                              <Link href='/profile' className='block'>
+                                Profile
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                          <li>
+                            <NavigationMenuLink asChild>
+                              <Link href='/loans' className='block'>
+                                Borrowed List
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                          <li>
+                            <NavigationMenuLink asChild>
+                              <Link href='/reviews' className='block'>
+                                Reviews
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                          <li>
+                            <button
+                              onClick={handleLogout}
+                              className='text-danger-500 md:text-md block w-full cursor-pointer text-left text-sm font-semibold'
+                            >
+                              Logout
+                            </button>
+                          </li>
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
+              </div>
+            )}
           </>
         ) : (
           <>
@@ -204,6 +219,35 @@ const AuthButtons = ({ className }: { className?: string }) => {
       <Button className='w-full md:w-[163px]' asChild>
         <Link href='/register'>Register</Link>
       </Button>
+    </div>
+  );
+};
+
+const SearchBox = ({
+  searchValue,
+  setSearchValue,
+  className,
+}: {
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+  className?: string;
+}) => {
+  return (
+    <div
+      className={cn(
+        'h-11 w-[500px] items-center gap-1 rounded-full border border-neutral-300 px-4 md:gap-1.5',
+        className
+      )}
+    >
+      <Search className='size-5 shrink-0 text-neutral-600' />
+
+      <Input
+        type='text'
+        placeholder='Search book'
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+        className='flex-1 border-0 outline-none'
+      />
     </div>
   );
 };
