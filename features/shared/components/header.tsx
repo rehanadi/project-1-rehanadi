@@ -7,7 +7,7 @@ import { Icon } from '@iconify/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import ResponsiveLogo from './responsive-logo';
 import { Button } from '@/components/ui/button';
-import { useAppSelector } from '@/lib/hooks';
+import { useAppSelector, useAppDispatch } from '@/lib/hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'react-use';
@@ -20,10 +20,12 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
+import { logout } from '@/features/auth/stores/auth-slice';
 
 const Header = () => {
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const { items } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
@@ -59,6 +61,11 @@ const Header = () => {
       setSearchValue(currentQuery || '');
     }
   }, [searchParams]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push('/login');
+  };
 
   if (!isHydrated) {
     return (
@@ -144,11 +151,12 @@ const Header = () => {
                           </NavigationMenuLink>
                         </li>
                         <li>
-                          <NavigationMenuLink asChild>
-                            <Link href='#' className='text-danger-500 block'>
-                              Logout
-                            </Link>
-                          </NavigationMenuLink>
+                          <button
+                            onClick={handleLogout}
+                            className='text-danger-500 md:text-md block w-full cursor-pointer text-left text-sm font-semibold'
+                          >
+                            Logout
+                          </button>
                         </li>
                       </ul>
                     </NavigationMenuContent>
