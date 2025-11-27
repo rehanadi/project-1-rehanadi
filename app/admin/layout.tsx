@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/lib/hooks';
-import Header from '@/features/shared/components/admin/header';
+import Header from '@/features/shared/components/header';
 
 interface AdminLayoutProps {
   children: React.ReactNode;

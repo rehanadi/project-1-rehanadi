@@ -35,6 +35,7 @@ const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
 
   const totalCartItems = items.length;
+  const isAdmin = user?.role === 'ADMIN';
 
   useEffect(() => {
     setIsHydrated(true);
@@ -90,95 +91,153 @@ const Header = () => {
 
         {isAuthenticated ? (
           <>
-            <SearchBox
-              searchValue={searchValue}
-              setSearchValue={setSearchValue}
-              className='hidden md:flex'
-            />
-
-            {showSearch ? (
-              <div className='flex w-full items-center justify-between gap-4 md:hidden'>
+            {!isAdmin && (
+              <>
                 <SearchBox
                   searchValue={searchValue}
                   setSearchValue={setSearchValue}
-                  className='flex flex-1'
-                />
-                <X
-                  className='size-6 cursor-pointer'
-                  onClick={() => setShowSearch(false)}
-                />
-              </div>
-            ) : (
-              <div className='flex-center gap-6'>
-                <Search
-                  className='block size-6 shrink-0 cursor-pointer md:hidden'
-                  onClick={() => setShowSearch(true)}
+                  className='hidden md:flex'
                 />
 
-                <Link href='/cart' className='relative'>
-                  <Icon
-                    icon='lets-icons:bag-fill'
-                    className='size-7 md:size-8'
-                  />
-                  {totalCartItems > 0 && (
-                    <div className='bg-danger-500 flex-center text-xs-bold absolute -top-1 -right-1 size-5 rounded-full text-white'>
-                      {totalCartItems}
-                    </div>
-                  )}
-                </Link>
+                {showSearch ? (
+                  <div className='flex w-full items-center justify-between gap-4 md:hidden'>
+                    <SearchBox
+                      searchValue={searchValue}
+                      setSearchValue={setSearchValue}
+                      className='flex flex-1'
+                    />
+                    <X
+                      className='size-6 cursor-pointer'
+                      onClick={() => setShowSearch(false)}
+                    />
+                  </div>
+                ) : (
+                  <div className='flex-center gap-6'>
+                    <Search
+                      className='block size-6 shrink-0 cursor-pointer md:hidden'
+                      onClick={() => setShowSearch(true)}
+                    />
 
-                <NavigationMenu>
-                  <NavigationMenuList>
-                    <NavigationMenuItem>
-                      <NavigationMenuTrigger className='flex-center gap-4 bg-transparent p-0 hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent'>
-                        <Avatar className='size-10 md:size-12'>
-                          <AvatarImage src='/images/avatar.png' />
-                          <AvatarFallback>
-                            {user?.name?.[0] || 'U'}
-                          </AvatarFallback>
-                        </Avatar>
+                    <Link href='/cart' className='relative'>
+                      <Icon
+                        icon='lets-icons:bag-fill'
+                        className='size-7 md:size-8'
+                      />
+                      {totalCartItems > 0 && (
+                        <div className='bg-danger-500 flex-center text-xs-bold absolute -top-1 -right-1 size-5 rounded-full text-white'>
+                          {totalCartItems}
+                        </div>
+                      )}
+                    </Link>
 
-                        <span className='text-lg-semibold hidden md:block'>
-                          {user?.name || 'User'}
-                        </span>
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <ul className='flex w-full flex-col gap-4 p-4 md:w-[200px]'>
-                          <li>
-                            <NavigationMenuLink asChild>
-                              <Link href='/profile' className='block'>
-                                Profile
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                          <li>
-                            <NavigationMenuLink asChild>
-                              <Link href='/loans' className='block'>
-                                Borrowed List
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                          <li>
-                            <NavigationMenuLink asChild>
-                              <Link href='/reviews' className='block'>
-                                Reviews
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                          <li>
-                            <button
-                              onClick={handleLogout}
-                              className='text-danger-500 md:text-md block w-full cursor-pointer text-left text-sm font-semibold'
-                            >
-                              Logout
-                            </button>
-                          </li>
-                        </ul>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-                  </NavigationMenuList>
-                </NavigationMenu>
-              </div>
+                    <NavigationMenu>
+                      <NavigationMenuList>
+                        <NavigationMenuItem>
+                          <NavigationMenuTrigger className='flex-center gap-4 bg-transparent p-0 hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent'>
+                            <Avatar className='size-10 md:size-12'>
+                              <AvatarImage src='/images/avatar.png' />
+                              <AvatarFallback>
+                                {user?.name?.[0] || 'U'}
+                              </AvatarFallback>
+                            </Avatar>
+
+                            <span className='text-lg-semibold hidden md:block'>
+                              {user?.name || 'User'}
+                            </span>
+                          </NavigationMenuTrigger>
+                          <NavigationMenuContent>
+                            <ul className='flex w-full flex-col gap-4 p-4 md:w-[200px]'>
+                              <li>
+                                <NavigationMenuLink asChild>
+                                  <Link href='/profile' className='block'>
+                                    Profile
+                                  </Link>
+                                </NavigationMenuLink>
+                              </li>
+                              <li>
+                                <NavigationMenuLink asChild>
+                                  <Link href='/loans' className='block'>
+                                    Borrowed List
+                                  </Link>
+                                </NavigationMenuLink>
+                              </li>
+                              <li>
+                                <NavigationMenuLink asChild>
+                                  <Link href='/reviews' className='block'>
+                                    Reviews
+                                  </Link>
+                                </NavigationMenuLink>
+                              </li>
+                              <li>
+                                <button
+                                  onClick={handleLogout}
+                                  className='text-danger-500 md:text-md block w-full cursor-pointer text-left text-sm font-semibold'
+                                >
+                                  Logout
+                                </button>
+                              </li>
+                            </ul>
+                          </NavigationMenuContent>
+                        </NavigationMenuItem>
+                      </NavigationMenuList>
+                    </NavigationMenu>
+                  </div>
+                )}
+              </>
+            )}
+
+            {isAdmin && (
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className='flex-center gap-4 bg-transparent p-0 hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent'>
+                      <Avatar className='size-10 md:size-12'>
+                        <AvatarImage src='/images/avatar.png' />
+                        <AvatarFallback>
+                          {user?.name?.[0] || 'U'}
+                        </AvatarFallback>
+                      </Avatar>
+
+                      <span className='text-lg-semibold hidden md:block'>
+                        {user?.name || 'User'}
+                      </span>
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className='flex w-full flex-col gap-4 p-4 md:w-[200px]'>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href='/admin/loans' className='block'>
+                              Borrowed List
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href='/admin/users' className='block'>
+                              User
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href='/admin/books' className='block'>
+                              Book List
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <button
+                            onClick={handleLogout}
+                            className='text-danger-500 md:text-md block w-full cursor-pointer text-left text-sm font-semibold'
+                          >
+                            Logout
+                          </button>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             )}
           </>
         ) : (

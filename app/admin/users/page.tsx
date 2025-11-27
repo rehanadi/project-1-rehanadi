@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import AdminTabs from '@/features/shared/components/admin/admin-tabs';
+import AdminTabs from '@/features/shared/components/admin-tabs';
 import SearchBox from './partials/search-box';
 import UserList from './partials/user-list';
 import UsersTitle from './partials/users-title';
