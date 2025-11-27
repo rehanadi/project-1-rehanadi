@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import BookRating from '@/features/books/components/book-rating';
@@ -7,6 +9,12 @@ import Link from 'next/link';
 import { useState } from 'react';
 import ModalDeleteBook from '@/features/books/components/modal-delete-book';
 import { useDeleteBook } from '@/features/books/hooks';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface BookCardProps {
   id: number;
@@ -58,7 +66,34 @@ const BookCard = ({
           </div>
         </div>
 
-        <Ellipsis className='block size-6 cursor-pointer md:hidden' />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className='block md:hidden'>
+              <Ellipsis className='size-6 cursor-pointer' />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align='end' className='w-[154px]'>
+            <DropdownMenuItem asChild>
+              <Link
+                href={`/admin/books/${id}/preview`}
+                className='cursor-pointer'
+              >
+                Preview
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={`/admin/books/${id}/edit`} className='cursor-pointer'>
+                Edit
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className='text-danger-500 focus:text-danger-500 cursor-pointer'
+              onClick={() => setShowDeleteModal(true)}
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <div className='hidden md:flex md:items-center md:gap-3.25'>
           <Button variant='outline' asChild className='h-12 w-[95px]'>
