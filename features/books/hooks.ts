@@ -6,6 +6,7 @@ import {
   GetBooksParams,
   GetRecommendedBooksParams,
   AddBookPayload,
+  UpdateBookPayload,
 } from './types/book.types';
 import { getErrorMessage } from '@/lib/api';
 import { useAppDispatch } from '@/lib/hooks';
@@ -129,6 +130,25 @@ export const useAddBook = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
       toast.success('Book added successfully!');
+      router.push('/admin/books');
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
+    },
+  });
+};
+
+export const useUpdateBook = (bookId: number) => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: UpdateBookPayload) =>
+      booksApi.updateBook(bookId, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['books'] });
+      queryClient.invalidateQueries({ queryKey: ['book', bookId] });
+      toast.success('Book updated successfully!');
       router.push('/admin/books');
     },
     onError: (error) => {

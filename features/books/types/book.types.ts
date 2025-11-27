@@ -116,6 +116,26 @@ export interface AddBookResponse {
   data: BookItem;
 }
 
+export interface UpdateBookPayload {
+  title: string;
+  description: string;
+  isbn: string;
+  publishedYear: number;
+  coverImage: string;
+  authorId: number;
+  categoryId: number;
+  totalCopies: number;
+  availableCopies: number;
+}
+
+export interface UpdateBookResponse {
+  success: true;
+  message: string;
+  data: {
+    book: BookItem;
+  };
+}
+
 export interface BooksState {
   books: BookItem[];
   pagination: {

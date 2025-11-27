@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,8 +14,92 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { editBookSchema, EditBookFormData } from '@/features/books/schemas';
+import { useGetBook, useUpdateBook } from '@/features/books/hooks';
+import { useGetCategories } from '@/features/categories/hooks';
+import { useGetAuthors } from '@/features/authors/hooks';
+import { useAppSelector } from '@/lib/hooks';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const EditBookPage = () => {
+  const params = useParams();
+  const router = useRouter();
+  const bookId = parseInt(params.id as string);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+  } = useForm<EditBookFormData>({
+    resolver: zodResolver(editBookSchema),
+  });
+
+  const { data: bookData, isLoading, isError } = useGetBook(bookId);
+  const { mutate: updateBook, isPending } = useUpdateBook(bookId);
+  const { categories } = useAppSelector((state) => state.categories);
+  const { authors } = useAppSelector((state) => state.authors);
+
+  useGetCategories();
+  useGetAuthors();
+
+  useEffect(() => {
+    if (isError) {
+      router.push('/admin/books');
+    }
+  }, [isError, router]);
+
+  useEffect(() => {
+    if (bookData?.data && categories.length > 0 && authors.length > 0) {
+      const book = bookData.data;
+      reset({
+        title: book.title,
+        isbn: book.isbn,
+        publishedYear: book.publishedYear,
+        totalCopies: book.totalCopies,
+        availableCopies: book.availableCopies,
+        authorId: book.authorId,
+        categoryId: book.categoryId,
+        description: book.description,
+        coverImage: book.coverImage || '',
+      });
+    }
+  }, [bookData, categories, authors, reset]);
+
+  const onSubmit = (data: EditBookFormData) => {
+    updateBook({
+      title: data.title,
+      description: data.description,
+      isbn: data.isbn,
+      publishedYear: data.publishedYear,
+      coverImage: data.coverImage || '',
+      authorId: data.authorId,
+      categoryId: data.categoryId,
+      totalCopies: data.totalCopies,
+      availableCopies: data.availableCopies,
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <div className='mx-auto flex w-[529px] max-w-full flex-col gap-4'>
+        <div className='flex-start gap-1.5 md:gap-3'>
+          <Link href='/admin/books'>
+            <ArrowLeft className='size-6 md:size-8' />
+          </Link>
+          <h1 className='md:text-display-xs text-xl font-bold'>Edit Book</h1>
+        </div>
+        <div className='flex items-center justify-center py-12'>
+          <p className='text-neutral-600'>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className='mx-auto flex w-[529px] max-w-full flex-col gap-4'>
       <div className='flex-start gap-1.5 md:gap-3'>
@@ -24,7 +110,7 @@ const EditBookPage = () => {
         <h1 className='md:text-display-xs text-xl font-bold'>Edit Book</h1>
       </div>
 
-      <form className='flex flex-col gap-4'>
+      <form className='flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-col gap-0.5'>
           <Label htmlFor='title' className='text-sm font-bold'>
             Title
@@ -34,11 +120,14 @@ const EditBookPage = () => {
             id='title'
             type='text'
             className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
+            {...register('title')}
           />
 
-          <span className='text-danger-500 text-sm font-medium'>
-            Text Helper
-          </span>
+          {errors.title && (
+            <span className='text-danger-500 text-sm font-medium'>
+              {errors.title.message}
+            </span>
+          )}
         </div>
 
         <div className='flex flex-col gap-0.5'>
@@ -50,11 +139,14 @@ const EditBookPage = () => {
             id='isbn'
             type='text'
             className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
+            {...register('isbn')}
           />
 
-          <span className='text-danger-500 text-sm font-medium'>
-            Text Helper
-          </span>
+          {errors.isbn && (
+            <span className='text-danger-500 text-sm font-medium'>
+              {errors.isbn.message}
+            </span>
+          )}
         </div>
 
         <div className='flex flex-col gap-0.5'>
@@ -66,11 +158,14 @@ const EditBookPage = () => {
             id='publishedYear'
             type='number'
             className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
+            {...register('publishedYear', { valueAsNumber: true })}
           />
 
-          <span className='text-danger-500 text-sm font-medium'>
-            Text Helper
-          </span>
+          {errors.publishedYear && (
+            <span className='text-danger-500 text-sm font-medium'>
+              {errors.publishedYear.message}
+            </span>
+          )}
         </div>
 
         <div className='flex flex-col gap-0.5'>
@@ -82,11 +177,14 @@ const EditBookPage = () => {
             id='totalCopies'
             type='number'
             className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
+            {...register('totalCopies', { valueAsNumber: true })}
           />
 
-          <span className='text-danger-500 text-sm font-medium'>
-            Text Helper
-          </span>
+          {errors.totalCopies && (
+            <span className='text-danger-500 text-sm font-medium'>
+              {errors.totalCopies.message}
+            </span>
+          )}
         </div>
 
         <div className='flex flex-col gap-0.5'>
@@ -98,11 +196,14 @@ const EditBookPage = () => {
             id='availableCopies'
             type='number'
             className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
+            {...register('availableCopies', { valueAsNumber: true })}
           />
 
-          <span className='text-danger-500 text-sm font-medium'>
-            Text Helper
-          </span>
+          {errors.availableCopies && (
+            <span className='text-danger-500 text-sm font-medium'>
+              {errors.availableCopies.message}
+            </span>
+          )}
         </div>
 
         <div className='flex flex-col gap-0.5'>
@@ -110,24 +211,36 @@ const EditBookPage = () => {
             Author
           </Label>
 
-          <Select>
-            <SelectTrigger className='h-12! w-full gap-2 rounded-xl border border-neutral-300'>
-              <SelectValue placeholder='Select Author' className='px-2' />
-            </SelectTrigger>
-            <SelectContent id='authorId' className='border-neutral-300'>
-              <SelectGroup>
-                <SelectItem value='apple'>Apple</SelectItem>
-                <SelectItem value='banana'>Banana</SelectItem>
-                <SelectItem value='blueberry'>Blueberry</SelectItem>
-                <SelectItem value='grapes'>Grapes</SelectItem>
-                <SelectItem value='pineapple'>Pineapple</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Controller
+            name='authorId'
+            control={control}
+            render={({ field }) => (
+              <Select
+                key={`author-${field.value}`}
+                value={field.value?.toString()}
+                onValueChange={(value) => field.onChange(parseInt(value))}
+              >
+                <SelectTrigger className='h-12 w-full gap-2 rounded-xl border border-neutral-300'>
+                  <SelectValue placeholder='Select Author' />
+                </SelectTrigger>
+                <SelectContent className='border-neutral-300'>
+                  <SelectGroup>
+                    {authors.map((author) => (
+                      <SelectItem key={author.id} value={author.id.toString()}>
+                        {author.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+          />
 
-          <span className='text-danger-500 text-sm font-medium'>
-            Text Helper
-          </span>
+          {errors.authorId && (
+            <span className='text-danger-500 text-sm font-medium'>
+              {errors.authorId.message}
+            </span>
+          )}
         </div>
 
         <div className='flex flex-col gap-0.5'>
@@ -135,24 +248,39 @@ const EditBookPage = () => {
             Category
           </Label>
 
-          <Select>
-            <SelectTrigger className='h-12! w-full gap-2 rounded-xl border border-neutral-300'>
-              <SelectValue placeholder='Select Category' className='px-2' />
-            </SelectTrigger>
-            <SelectContent id='categoryId' className='border-neutral-300'>
-              <SelectGroup>
-                <SelectItem value='apple'>Apple</SelectItem>
-                <SelectItem value='banana'>Banana</SelectItem>
-                <SelectItem value='blueberry'>Blueberry</SelectItem>
-                <SelectItem value='grapes'>Grapes</SelectItem>
-                <SelectItem value='pineapple'>Pineapple</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Controller
+            name='categoryId'
+            control={control}
+            render={({ field }) => (
+              <Select
+                key={`category-${field.value}`}
+                value={field.value?.toString()}
+                onValueChange={(value) => field.onChange(parseInt(value))}
+              >
+                <SelectTrigger className='h-12 w-full gap-2 rounded-xl border border-neutral-300'>
+                  <SelectValue placeholder='Select Category' />
+                </SelectTrigger>
+                <SelectContent className='border-neutral-300'>
+                  <SelectGroup>
+                    {categories.map((category) => (
+                      <SelectItem
+                        key={category.id}
+                        value={category.id.toString()}
+                      >
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+          />
 
-          <span className='text-danger-500 text-sm font-medium'>
-            Text Helper
-          </span>
+          {errors.categoryId && (
+            <span className='text-danger-500 text-sm font-medium'>
+              {errors.categoryId.message}
+            </span>
+          )}
         </div>
 
         <div className='flex flex-col gap-0.5'>
@@ -163,11 +291,14 @@ const EditBookPage = () => {
           <Textarea
             id='description'
             className='h-[101px] w-full resize-none rounded-xl border border-neutral-300 px-4 py-2'
+            {...register('description')}
           />
 
-          <span className='text-danger-500 text-sm font-medium'>
-            Text Helper
-          </span>
+          {errors.description && (
+            <span className='text-danger-500 text-sm font-medium'>
+              {errors.description.message}
+            </span>
+          )}
         </div>
 
         <div className='flex flex-col gap-0.5'>
@@ -180,15 +311,18 @@ const EditBookPage = () => {
             type='text'
             className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
             placeholder='Enter Image URL'
+            {...register('coverImage')}
           />
 
-          <span className='text-danger-500 text-sm font-medium'>
-            Text Helper
-          </span>
+          {errors.coverImage && (
+            <span className='text-danger-500 text-sm font-medium'>
+              {errors.coverImage.message}
+            </span>
+          )}
         </div>
 
-        <Button className='h-12 w-full' type='submit'>
-          Save
+        <Button className='h-12 w-full' type='submit' disabled={isPending}>
+          {isPending ? 'Saving...' : 'Save'}
         </Button>
       </form>
     </div>

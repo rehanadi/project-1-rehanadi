@@ -41,4 +41,7 @@ export const addBookSchema = z
     path: ['availableCopies'],
   });
 
+export const editBookSchema = addBookSchema;
+
 export type AddBookFormData = z.infer<typeof addBookSchema>;
+export type EditBookFormData = z.infer<typeof editBookSchema>;
