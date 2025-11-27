@@ -71,16 +71,14 @@ const ModalAddReview = ({
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className='max-w-[343px] rounded-2xl p-6 md:max-w-[400px]'>
-        <DialogHeader>
-          <DialogTitle className='text-center text-xl font-bold'>
-            Give Review
-          </DialogTitle>
+      <DialogContent className='max-w-[343px] md:max-w-[400px]'>
+        <DialogHeader className='-mt-1'>
+          <DialogTitle>Give Review</DialogTitle>
         </DialogHeader>
 
-        <div className='flex flex-col gap-4'>
-          <div className='flex flex-col items-center gap-2'>
-            <span className='text-sm font-semibold text-neutral-700'>
+        <div className='flex flex-col gap-6'>
+          <div className='flex flex-col items-center'>
+            <span className='md:text-md text-sm font-semibold'>
               Give Rating
             </span>
             <div className='flex gap-1'>
@@ -97,7 +95,7 @@ const ModalAddReview = ({
                   <Icon
                     icon='material-symbols:star-rounded'
                     className={cn(
-                      'size-10',
+                      'size-10 cursor-pointer md:size-12.25',
                       index < rating ? 'text-yellow-500' : 'text-neutral-300'
                     )}
                   />
@@ -105,7 +103,7 @@ const ModalAddReview = ({
               ))}
             </div>
             {errors.rating && (
-              <span className='text-danger-500 text-sm font-medium'>
+              <span className='text-danger-500 md:text-md text-sm font-medium'>
                 {errors.rating}
               </span>
             )}
@@ -119,7 +117,7 @@ const ModalAddReview = ({
                 setComment(e.target.value);
                 setErrors((prev) => ({ ...prev, comment: undefined }));
               }}
-              className='min-h-24 resize-none'
+              className='min-h-[235px] resize-none'
             />
             {errors.comment && (
               <span className='text-danger-500 text-sm font-medium'>
@@ -129,7 +127,7 @@ const ModalAddReview = ({
           </div>
 
           <Button
-            className='h-12 w-full rounded-full'
+            className='h-10 w-full md:h-12'
             onClick={handleSubmit}
             disabled={isSubmitting}
           >
