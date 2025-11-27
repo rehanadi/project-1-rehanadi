@@ -1,5 +1,10 @@
 import { http } from '@/lib/api';
-import { GetMyReviewsParams, GetMyReviewsResponse } from './types/review.types';
+import {
+  GetMyReviewsParams,
+  GetMyReviewsResponse,
+  AddReviewPayload,
+  AddReviewResponse,
+} from './types/review.types';
 
 export const reviewsApi = {
   getMyReviews: async (
@@ -9,5 +14,9 @@ export const reviewsApi = {
     return http.get<GetMyReviewsResponse>(
       `/api/me/reviews?page=${page}&limit=${limit}`
     );
+  },
+
+  addReview: async (payload: AddReviewPayload): Promise<AddReviewResponse> => {
+    return http.post<AddReviewResponse>('/api/reviews', payload);
   },
 };

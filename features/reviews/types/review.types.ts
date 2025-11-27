@@ -39,6 +39,31 @@ export interface GetMyReviewsResponse {
   };
 }
 
+export interface AddReviewPayload {
+  bookId: number;
+  star: number;
+  comment: string;
+}
+
+export interface AddReviewResponse {
+  success: true;
+  message: string;
+  data: {
+    review: {
+      id: number;
+      star: number;
+      comment: string;
+      userId: number;
+      bookId: number;
+      createdAt: string;
+    };
+    bookStats: {
+      rating: number;
+      reviewCount: number;
+    };
+  };
+}
+
 export interface ReviewsState {
   myReviews: MyReview[];
   pagination: {
