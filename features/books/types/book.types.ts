@@ -98,6 +98,24 @@ export interface GetRecommendedBooksResponse {
   };
 }
 
+export interface AddBookPayload {
+  title: string;
+  description: string;
+  isbn: string;
+  publishedYear: number;
+  coverImage: string;
+  authorId: number;
+  categoryId: number;
+  totalCopies: number;
+  availableCopies: number;
+}
+
+export interface AddBookResponse {
+  success: true;
+  message: string;
+  data: BookItem;
+}
+
 export interface BooksState {
   books: BookItem[];
   pagination: {

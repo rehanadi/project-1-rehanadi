@@ -42,12 +42,12 @@ const EditBookPage = () => {
         </div>
 
         <div className='flex flex-col gap-0.5'>
-          <Label htmlFor='author' className='text-sm font-bold'>
-            Author
+          <Label htmlFor='isbn' className='text-sm font-bold'>
+            ISBN
           </Label>
 
           <Input
-            id='author'
+            id='isbn'
             type='text'
             className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
           />
@@ -58,15 +58,63 @@ const EditBookPage = () => {
         </div>
 
         <div className='flex flex-col gap-0.5'>
-          <Label htmlFor='category' className='text-sm font-bold'>
-            Category
+          <Label htmlFor='publishedYear' className='text-sm font-bold'>
+            Published Year
+          </Label>
+
+          <Input
+            id='publishedYear'
+            type='number'
+            className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
+          />
+
+          <span className='text-danger-500 text-sm font-medium'>
+            Text Helper
+          </span>
+        </div>
+
+        <div className='flex flex-col gap-0.5'>
+          <Label htmlFor='totalCopies' className='text-sm font-bold'>
+            Total Copies
+          </Label>
+
+          <Input
+            id='totalCopies'
+            type='number'
+            className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
+          />
+
+          <span className='text-danger-500 text-sm font-medium'>
+            Text Helper
+          </span>
+        </div>
+
+        <div className='flex flex-col gap-0.5'>
+          <Label htmlFor='availableCopies' className='text-sm font-bold'>
+            Available Copies
+          </Label>
+
+          <Input
+            id='availableCopies'
+            type='number'
+            className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
+          />
+
+          <span className='text-danger-500 text-sm font-medium'>
+            Text Helper
+          </span>
+        </div>
+
+        <div className='flex flex-col gap-0.5'>
+          <Label htmlFor='authorId' className='text-sm font-bold'>
+            Author
           </Label>
 
           <Select>
             <SelectTrigger className='h-12! w-full gap-2 rounded-xl border border-neutral-300'>
-              <SelectValue placeholder='Select Category' className='px-2' />
+              <SelectValue placeholder='Select Author' className='px-2' />
             </SelectTrigger>
-            <SelectContent className='border-neutral-300'>
+            <SelectContent id='authorId' className='border-neutral-300'>
               <SelectGroup>
                 <SelectItem value='apple'>Apple</SelectItem>
                 <SelectItem value='banana'>Banana</SelectItem>
@@ -83,15 +131,24 @@ const EditBookPage = () => {
         </div>
 
         <div className='flex flex-col gap-0.5'>
-          <Label htmlFor='numberOfPages' className='text-sm font-bold'>
-            Number of Pages
+          <Label htmlFor='categoryId' className='text-sm font-bold'>
+            Category
           </Label>
 
-          <Input
-            id='numberOfPages'
-            type='number'
-            className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
-          />
+          <Select>
+            <SelectTrigger className='h-12! w-full gap-2 rounded-xl border border-neutral-300'>
+              <SelectValue placeholder='Select Category' className='px-2' />
+            </SelectTrigger>
+            <SelectContent id='categoryId' className='border-neutral-300'>
+              <SelectGroup>
+                <SelectItem value='apple'>Apple</SelectItem>
+                <SelectItem value='banana'>Banana</SelectItem>
+                <SelectItem value='blueberry'>Blueberry</SelectItem>
+                <SelectItem value='grapes'>Grapes</SelectItem>
+                <SelectItem value='pineapple'>Pineapple</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
 
           <span className='text-danger-500 text-sm font-medium'>
             Text Helper
@@ -120,8 +177,9 @@ const EditBookPage = () => {
 
           <Input
             id='coverImage'
-            type='file'
+            type='text'
             className='h-12 w-full rounded-xl border border-neutral-300 px-4 py-2'
+            placeholder='Enter Image URL'
           />
 
           <span className='text-danger-500 text-sm font-medium'>

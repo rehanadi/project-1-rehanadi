@@ -1,6 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 import { booksApi } from './api';
-import { GetBooksParams, GetRecommendedBooksParams } from './types/book.types';
+import {
+  GetBooksParams,
+  GetRecommendedBooksParams,
+  AddBookPayload,
+} from './types/book.types';
+import { getErrorMessage } from '@/lib/api';
 import { useAppDispatch } from '@/lib/hooks';
 import {
   appendBooks,
@@ -110,5 +117,22 @@ export const useGetRelatedBooks = (
     retry: 1,
     staleTime: 1000 * 60,
     gcTime: 1000 * 60,
+  });
+};
+
+export const useAddBook = () => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: AddBookPayload) => booksApi.addBook(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['books'] });
+      toast.success('Book added successfully!');
+      router.push('/admin/books');
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
+    },
   });
 };
