@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import AdminTabs from '@/features/shared/components/admin-tabs';
 import BooksContainer from './partials/books-container';
 import BooksTitle from './partials/books-title';
@@ -9,11 +9,13 @@ import StatusTabs from './partials/status-tabs';
 import BookList from './partials/book-list';
 import ButtonAdd from './partials/button-add';
 import { useGetBooks } from '@/features/books/hooks';
+import { useQueryClient } from '@tanstack/react-query';
 
 const BooksPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const limit = 10;
+  const queryClient = useQueryClient();
 
   const { isLoading } = useGetBooks(
     {
@@ -32,6 +34,22 @@ const BooksPage = () => {
   const handleLoadMore = () => {
     setCurrentPage((prev) => prev + 1);
   };
+
+  // Reset page and search when books are refetched after delete
+  useEffect(() => {
+    const unsubscribe = queryClient.getQueryCache().subscribe((event) => {
+      if (
+        event?.type === 'updated' &&
+        event?.query?.queryKey?.[0] === 'books' &&
+        event?.action?.type === 'invalidate'
+      ) {
+        setCurrentPage(1);
+        setSearchQuery('');
+      }
+    });
+
+    return () => unsubscribe();
+  }, [queryClient]);
 
   return (
     <>

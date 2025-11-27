@@ -136,6 +136,14 @@ export interface UpdateBookResponse {
   };
 }
 
+export interface DeleteBookResponse {
+  success: true;
+  message: string;
+  data: {
+    id: number;
+  };
+}
+
 export interface BooksState {
   books: BookItem[];
   pagination: {

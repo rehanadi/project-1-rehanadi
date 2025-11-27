@@ -9,6 +9,7 @@ import {
   AddBookResponse,
   UpdateBookPayload,
   UpdateBookResponse,
+  DeleteBookResponse,
 } from './types/book.types';
 
 export const booksApi = {
@@ -43,5 +44,9 @@ export const booksApi = {
     payload: UpdateBookPayload
   ): Promise<UpdateBookResponse> => {
     return http.put<UpdateBookResponse>(`/api/books/${bookId}`, payload);
+  },
+
+  deleteBook: async (bookId: number): Promise<DeleteBookResponse> => {
+    return http.delete<DeleteBookResponse>(`/api/books/${bookId}`);
   },
 };

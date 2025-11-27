@@ -156,3 +156,18 @@ export const useUpdateBook = (bookId: number) => {
     },
   });
 };
+
+export const useDeleteBook = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (bookId: number) => booksApi.deleteBook(bookId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['books'] });
+      toast.success('Book deleted successfully!');
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
+    },
+  });
+};

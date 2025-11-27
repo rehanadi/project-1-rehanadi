@@ -4,6 +4,9 @@ import BookRating from '@/features/books/components/book-rating';
 import { Ellipsis } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useState } from 'react';
+import ModalDeleteBook from '@/features/books/components/modal-delete-book';
+import { useDeleteBook } from '@/features/books/hooks';
 
 interface BookCardProps {
   id: number;
@@ -22,41 +25,65 @@ const BookCard = ({
   image,
   category,
 }: BookCardProps) => {
-  return (
-    <div className='shadow-light flex-between rounded-2xl bg-white p-4 md:p-5'>
-      <div className='flex-start flex-1 gap-3 md:gap-4'>
-        <Image
-          src={image}
-          alt={title}
-          width={92}
-          height={138}
-          className='rounded object-cover'
-        />
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { mutate: deleteBook, isPending } = useDeleteBook();
 
-        <div className='flex flex-col gap-0.5'>
-          <Badge variant='outline'>{category}</Badge>
-          <h3 className='text-sm font-bold md:text-lg'>{title}</h3>
-          <p className='md:text-md text-sm font-medium text-neutral-700'>
-            {author}
-          </p>
-          <BookRating rating={rating} />
+  const handleDelete = () => {
+    deleteBook(id, {
+      onSuccess: () => {
+        setShowDeleteModal(false);
+      },
+    });
+  };
+
+  return (
+    <>
+      <div className='shadow-light flex-between rounded-2xl bg-white p-4 md:p-5'>
+        <div className='flex-start flex-1 gap-3 md:gap-4'>
+          <Image
+            src={image}
+            alt={title}
+            width={92}
+            height={138}
+            className='rounded object-cover'
+          />
+
+          <div className='flex flex-col gap-0.5'>
+            <Badge variant='outline'>{category}</Badge>
+            <h3 className='text-sm font-bold md:text-lg'>{title}</h3>
+            <p className='md:text-md text-sm font-medium text-neutral-700'>
+              {author}
+            </p>
+            <BookRating rating={rating} />
+          </div>
+        </div>
+
+        <Ellipsis className='block size-6 cursor-pointer md:hidden' />
+
+        <div className='hidden md:flex md:items-center md:gap-3.25'>
+          <Button variant='outline' asChild className='h-12 w-[95px]'>
+            <Link href={`/admin/books/${id}/preview`}>Preview</Link>
+          </Button>
+          <Button variant='outline' asChild className='h-12 w-[95px]'>
+            <Link href={`/admin/books/${id}/edit`}>Edit</Link>
+          </Button>
+          <Button
+            variant='danger'
+            className='h-12 w-[95px]'
+            onClick={() => setShowDeleteModal(true)}
+          >
+            Delete
+          </Button>
         </div>
       </div>
 
-      <Ellipsis className='block size-6 cursor-pointer md:hidden' />
-
-      <div className='hidden md:flex md:items-center md:gap-3.25'>
-        <Button variant='outline' asChild className='h-12 w-[95px]'>
-          <Link href={`/admin/books/${id}/preview`}>Preview</Link>
-        </Button>
-        <Button variant='outline' asChild className='h-12 w-[95px]'>
-          <Link href={`/admin/books/${id}/edit`}>Edit</Link>
-        </Button>
-        <Button variant='danger' className='h-12 w-[95px]'>
-          Delete
-        </Button>
-      </div>
-    </div>
+      <ModalDeleteBook
+        open={showDeleteModal}
+        onOpenChange={setShowDeleteModal}
+        onConfirm={handleDelete}
+        isDeleting={isPending}
+      />
+    </>
   );
 };
 
