@@ -76,18 +76,21 @@ const BookCard = ({
             <DropdownMenuItem asChild>
               <Link
                 href={`/admin/books/${id}/preview`}
-                className='cursor-pointer'
+                className='hover:text-primary-300 cursor-pointer'
               >
                 Preview
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={`/admin/books/${id}/edit`} className='cursor-pointer'>
+              <Link
+                href={`/admin/books/${id}/edit`}
+                className='hover:text-primary-300 cursor-pointer'
+              >
                 Edit
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem
-              className='text-danger-500 focus:text-danger-500 cursor-pointer'
+              className='text-danger-500 focus:text-danger-500 hover:text-primary-300 cursor-pointer'
               onClick={() => setShowDeleteModal(true)}
             >
               Delete

@@ -149,21 +149,30 @@ const Header = () => {
                             <ul className='flex w-full flex-col gap-4 p-4 md:w-[200px]'>
                               <li>
                                 <NavigationMenuLink asChild>
-                                  <Link href='/profile' className='block'>
+                                  <Link
+                                    href='/profile'
+                                    className='hover:text-primary-300 block'
+                                  >
                                     Profile
                                   </Link>
                                 </NavigationMenuLink>
                               </li>
                               <li>
                                 <NavigationMenuLink asChild>
-                                  <Link href='/loans' className='block'>
+                                  <Link
+                                    href='/loans'
+                                    className='hover:text-primary-300 block'
+                                  >
                                     Borrowed List
                                   </Link>
                                 </NavigationMenuLink>
                               </li>
                               <li>
                                 <NavigationMenuLink asChild>
-                                  <Link href='/reviews' className='block'>
+                                  <Link
+                                    href='/reviews'
+                                    className='hover:text-primary-300 block'
+                                  >
                                     Reviews
                                   </Link>
                                 </NavigationMenuLink>
@@ -171,7 +180,7 @@ const Header = () => {
                               <li>
                                 <button
                                   onClick={handleLogout}
-                                  className='text-danger-500 md:text-md block w-full cursor-pointer text-left text-sm font-semibold'
+                                  className='text-danger-500 md:text-md hover:text-primary-300 block w-full cursor-pointer text-left text-sm font-semibold'
                                 >
                                   Logout
                                 </button>
