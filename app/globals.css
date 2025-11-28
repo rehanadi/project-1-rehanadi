@@ -9,15 +9,15 @@
   /* Font Family */
 
   /* Text Sizes and Line Heights */
-  --text-display-3xl: 3.75rem;
-  --text-display-3xl--line-height: 4.5rem;
+  --text-display-3xl: 3.5rem;
+  --text-display-3xl--line-height: 4.25rem;
 
   --text-display-2xl: 3rem;
   --text-display-2xl--line-height: 3.75rem;
   --text-display-2xl--letter-spacing: -2%;
 
   --text-display-xl: 2.5rem;
-  --text-display-xl--line-height: 3rem;
+  --text-display-xl--line-height: 3.5rem;
   --text-display-xl--letter-spacing: -2%;
 
   --text-display-lg: 2.25rem;
@@ -25,7 +25,7 @@
   --text-display-lg--letter-spacing: -2%;
 
   --text-display-md: 2rem;
-  --text-display-md--line-height: 2.5rem;
+  --text-display-md--line-height: 2.625rem;
 
   --text-display-sm: 1.75rem;
   --text-display-sm--line-height: 2.375rem;
