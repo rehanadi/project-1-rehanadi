@@ -9,6 +9,8 @@ import { useGetBook } from '@/features/books/hooks';
 import { useState } from 'react';
 import ModalAddReview from '@/features/reviews/components/modal-add-review';
 import { useAddReview } from '@/features/reviews/hooks';
+import { getStatusLabel, getStatusVariant } from '../utils';
+import { useAppSelector } from '@/lib/hooks';
 
 interface LoanItemCardProps {
   loan: MyLoan;
@@ -18,18 +20,9 @@ const LoanItemCard = ({ loan }: LoanItemCardProps) => {
   const { data: bookData, isLoading: isLoadingBook } = useGetBook(loan.bookId);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const { mutate: addReview, isPending } = useAddReview();
-
-  const getStatusVariant = (status: string) => {
-    if (status === 'LATE') return 'danger';
-    if (status === 'RETURNED') return 'outline';
-    return 'success';
-  };
-
-  const getStatusLabel = (status: string) => {
-    if (status === 'BORROWED') return 'Active';
-    if (status === 'RETURNED') return 'Returned';
-    return 'Overdue';
-  };
+  const user = useAppSelector((state) => state.auth.user);
+  const isAdmin = user?.role === 'ADMIN';
+  const userName = user?.name || 'User';
 
   const handleSubmitReview = (rating: number, comment: string) => {
     addReview(
@@ -109,12 +102,24 @@ const LoanItemCard = ({ loan }: LoanItemCardProps) => {
             </div>
           </div>
 
-          <Button
-            className='w-full md:h-10 md:w-[182px]'
-            onClick={() => setShowReviewModal(true)}
-          >
-            Give Review
-          </Button>
+          {isAdmin ? (
+            <div className='flex flex-col gap-3'>
+              <Separator className='md:hidden' />
+              <div className='flex flex-col'>
+                <span className='md:text-md text-sm font-semibold'>
+                  borrower's name
+                </span>
+                <span className='text-md font-bold md:text-xl'>{userName}</span>
+              </div>
+            </div>
+          ) : (
+            <Button
+              className='w-full md:h-10 md:w-[182px]'
+              onClick={() => setShowReviewModal(true)}
+            >
+              Give Review
+            </Button>
+          )}
         </div>
       </div>
 
