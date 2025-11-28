@@ -6,6 +6,7 @@ import { GetMyReviewsParams, AddReviewPayload } from './types/review.types';
 import { getErrorMessage } from '@/lib/api';
 import { useAppDispatch } from '@/lib/hooks';
 import { appendMyReviews, setMyReviews } from './stores/reviews-slice';
+import { CACHE_DURATION } from '../shared/constants/duration';
 
 export const useGetMyReviews = (
   params: GetMyReviewsParams = {},
@@ -27,8 +28,8 @@ export const useGetMyReviews = (
       return response;
     },
     retry: 1,
-    staleTime: 1000 * 60,
-    gcTime: 1000 * 60,
+    staleTime: CACHE_DURATION,
+    gcTime: CACHE_DURATION,
   });
 };
 

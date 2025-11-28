@@ -18,6 +18,7 @@ import {
   setCurrentBook,
   setRelatedBooks,
 } from './stores/books-slice';
+import { CACHE_DURATION } from '../shared/constants/duration';
 
 export const useGetBooks = (
   params: GetBooksParams = {},
@@ -40,7 +41,7 @@ export const useGetBooks = (
     },
     retry: 1,
     staleTime: 0,
-    gcTime: 1000 * 60,
+    gcTime: CACHE_DURATION,
   });
 };
 
@@ -57,8 +58,8 @@ export const useGetRecommendedBooks = (
       return response;
     },
     retry: 1,
-    staleTime: 1000 * 60,
-    gcTime: 1000 * 60,
+    staleTime: CACHE_DURATION,
+    gcTime: CACHE_DURATION,
   });
 };
 
@@ -79,8 +80,8 @@ export const useGetCatalogBooks = (params: GetBooksParams = {}) => {
       return response;
     },
     retry: 1,
-    staleTime: 1000 * 60,
-    gcTime: 1000 * 60,
+    staleTime: CACHE_DURATION,
+    gcTime: CACHE_DURATION,
   });
 };
 
@@ -96,8 +97,8 @@ export const useGetBook = (bookId: number, enabled: boolean = true) => {
     },
     enabled: enabled && bookId > 0,
     retry: 1,
-    staleTime: 1000 * 60,
-    gcTime: 1000 * 60,
+    staleTime: CACHE_DURATION,
+    gcTime: CACHE_DURATION,
   });
 };
 
@@ -116,8 +117,8 @@ export const useGetRelatedBooks = (
     },
     enabled: enabled && categoryId > 0,
     retry: 1,
-    staleTime: 1000 * 60,
-    gcTime: 1000 * 60,
+    staleTime: CACHE_DURATION,
+    gcTime: CACHE_DURATION,
   });
 };
 

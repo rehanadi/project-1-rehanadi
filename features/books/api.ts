@@ -11,6 +11,7 @@ import {
   UpdateBookResponse,
   DeleteBookResponse,
 } from './types/book.types';
+import { API_BOOKS_URL } from '../shared/constants/api-url';
 
 export const booksApi = {
   getBooks: async (params: GetBooksParams = {}): Promise<GetBooksResponse> => {
@@ -18,7 +19,7 @@ export const booksApi = {
     const categoryParam = categoryId ? `&categoryId=${categoryId}` : '';
     const searchParam = q ? `&q=${encodeURIComponent(q)}` : '';
     return http.get<GetBooksResponse>(
-      `/api/books?page=${page}&limit=${limit}${categoryParam}${searchParam}`
+      `${API_BOOKS_URL}?page=${page}&limit=${limit}${categoryParam}${searchParam}`
     );
   },
 
@@ -27,26 +28,26 @@ export const booksApi = {
   ): Promise<GetRecommendedBooksResponse> => {
     const { by = 'rating', limit = 10 } = params;
     return http.get<GetRecommendedBooksResponse>(
-      `/api/books/recommend?by=${by}&limit=${limit}`
+      `${API_BOOKS_URL}/recommend?by=${by}&limit=${limit}`
     );
   },
 
   getBook: async (bookId: number): Promise<GetBookResponse> => {
-    return http.get<GetBookResponse>(`/api/books/${bookId}`);
+    return http.get<GetBookResponse>(`${API_BOOKS_URL}/${bookId}`);
   },
 
   addBook: async (payload: AddBookPayload): Promise<AddBookResponse> => {
-    return http.post<AddBookResponse>('/api/books', payload);
+    return http.post<AddBookResponse>(API_BOOKS_URL, payload);
   },
 
   updateBook: async (
     bookId: number,
     payload: UpdateBookPayload
   ): Promise<UpdateBookResponse> => {
-    return http.put<UpdateBookResponse>(`/api/books/${bookId}`, payload);
+    return http.put<UpdateBookResponse>(`${API_BOOKS_URL}/${bookId}`, payload);
   },
 
   deleteBook: async (bookId: number): Promise<DeleteBookResponse> => {
-    return http.delete<DeleteBookResponse>(`/api/books/${bookId}`);
+    return http.delete<DeleteBookResponse>(`${API_BOOKS_URL}/${bookId}`);
   },
 };

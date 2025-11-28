@@ -6,6 +6,7 @@ import {
   setAuthorBooks,
   setCurrentAuthor,
 } from './stores/authors-slice';
+import { CACHE_DURATION } from '../shared/constants/duration';
 
 export const useGetAuthors = () => {
   const dispatch = useAppDispatch();
@@ -18,8 +19,8 @@ export const useGetAuthors = () => {
       return response;
     },
     retry: 1,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 5,
+    staleTime: CACHE_DURATION,
+    gcTime: CACHE_DURATION,
   });
 };
 
@@ -44,7 +45,7 @@ export const useGetAuthorBooks = (
     },
     enabled: enabled && authorId > 0,
     retry: 1,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 5,
+    staleTime: CACHE_DURATION,
+    gcTime: CACHE_DURATION,
   });
 };

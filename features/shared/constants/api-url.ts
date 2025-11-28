@@ -1,0 +1,12 @@
+export const API_AUTH_URL = '/api/auth';
+export const API_USERS_URL = '/api/users';
+export const API_AUTHORS_URL = '/api/authors';
+export const API_CATEGORIES_URL = '/api/categories';
+export const API_BOOKS_URL = '/api/books';
+export const API_CART_URL = '/api/cart';
+export const API_LOANS_URL = '/api/loans';
+export const API_REVIEWS_URL = '/api/reviews';
+export const API_ME_URL = '/api/me';
+export const API_ME_LOANS_URL = '/api/me/loans';
+export const API_ME_REVIEWS_URL = '/api/me/reviews';
+export const API_ADMIN_USERS_URL = '/api/admin/users';

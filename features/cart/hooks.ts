@@ -6,6 +6,7 @@ import { AddCartPayload } from './types/cart.types';
 import { getErrorMessage } from '@/lib/api';
 import { useAppDispatch } from '@/lib/hooks';
 import { setCart, removeCartItemFromState } from './stores/cart-slice';
+import { CACHE_DURATION } from '../shared/constants/duration';
 
 export const useGetMyCart = (enabled: boolean = true) => {
   const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ export const useGetMyCart = (enabled: boolean = true) => {
     },
     retry: 1,
     staleTime: 0,
-    gcTime: 1000 * 60,
+    gcTime: CACHE_DURATION,
     enabled,
   });
 };

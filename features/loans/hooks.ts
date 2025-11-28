@@ -5,6 +5,7 @@ import { AddLoanPayload, GetMyLoansParams } from './types/loan.types';
 import { getErrorMessage } from '@/lib/api';
 import { useAppDispatch } from '@/lib/hooks';
 import { appendMyLoans, setMyLoans } from './stores/loans-slice';
+import { CACHE_DURATION } from '../shared/constants/duration';
 
 export const useAddLoan = () => {
   const queryClient = useQueryClient();
@@ -45,7 +46,7 @@ export const useGetMyLoans = (
       return response;
     },
     retry: 1,
-    staleTime: 1000 * 60,
-    gcTime: 1000 * 60,
+    staleTime: CACHE_DURATION,
+    gcTime: CACHE_DURATION,
   });
 };

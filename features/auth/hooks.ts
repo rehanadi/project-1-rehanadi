@@ -6,6 +6,7 @@ import { LoginPayload, RegisterPayload } from './types/auth.types';
 import { getErrorMessage } from '@/lib/api';
 import { useAppDispatch } from '@/lib/hooks';
 import { setCredentials, setUser } from './stores/auth-slice';
+import { CACHE_DURATION } from '../shared/constants/duration';
 
 export const useRegister = () => {
   const router = useRouter();
@@ -65,7 +66,7 @@ export const useGetMyProfile = () => {
       return response;
     },
     retry: 1,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 5,
+    staleTime: CACHE_DURATION,
+    gcTime: CACHE_DURATION,
   });
 };
