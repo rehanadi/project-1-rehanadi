@@ -4,6 +4,7 @@ import {
   socialMediaData,
   type SocialMediaData,
 } from '@/features/shared/constants/social-media-data';
+import Image from 'next/image';
 
 const Footer = () => {
   return (
@@ -35,11 +36,23 @@ const Footer = () => {
 
 export default Footer;
 
-const SocialMediaIcon = ({ name, icon, link }: SocialMediaData) => {
+const SocialMediaIcon = ({
+  name,
+  icon,
+  link,
+  width,
+  height,
+}: SocialMediaData) => {
   return (
     <Link href={link}>
       <div className='flex-center size-10 rounded-full border border-neutral-300 transition hover:bg-neutral-200'>
-        <img src={icon} alt={name} />
+        <Image
+          src={icon}
+          alt={name}
+          width={width}
+          height={height}
+          className='object-contain'
+        />
       </div>
     </Link>
   );
